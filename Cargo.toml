@@ -1,0 +1,9 @@
+[package]
+authors = ["Nuno Maduro <enunomaduro@gmail.com>"]
+edition = "2021"
+name = "wena"
+license = "MIT"
+version = "0.0.1"
+
+[dependencies]
+clap = { version = "3.1.6", features = ["derive"] }
