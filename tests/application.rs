@@ -30,7 +30,7 @@ fn it_may_have_commands() {
         app.command(
             "list",
             "Displays the application commands",
-            |_output: &mut Buffer| {}
+            |_output| {}
         )
         .commands
         .len(),
@@ -43,8 +43,8 @@ fn it_run_commands() {
     let mut app = wena::new::<Buffer>("my-application", "0.0.1");
     let mut output = buffer::new();
 
-    app.command("hello", "Displays hello", |output: &mut Buffer| {
-        output.writeln("Hello, world!");
+    app.command("hello", "Displays hello", |command| {
+        command.output.writeln("Hello, world!");
     })
     .run_with_arguments(
         &mut output,

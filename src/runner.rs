@@ -1,3 +1,4 @@
+use crate::commands::CommandContext;
 use crate::application::Application;
 use crate::output::Output;
 use clap::Command;
@@ -25,13 +26,22 @@ pub fn run<TOutput: Output>(
                     .iter()
                     .find(|command| command.name == name)
                     .unwrap()
-                    .handler)(output);
+                    .handler)(&mut CommandContext::<TOutput> {
+                        application,
+                        output,
+                    });
             } else {
-                (crate::commands::list::new().handler)(output);
+                (crate::commands::list::new().handler)(&mut CommandContext::<TOutput> {
+                    application,
+                    output,
+                });
             }
         }
         Err(_) => {
-            (crate::commands::invalid::new().handler)(output);
+            (crate::commands::invalid::new().handler)(&mut CommandContext::<TOutput> {
+                application,
+                output,
+            });
         }
     }
 }

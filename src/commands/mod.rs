@@ -1,9 +1,10 @@
 pub mod invalid;
 pub mod list;
 
+use crate::application::Application;
 use crate::output::Output;
 
-pub type Handler<TOutput> = fn(&mut TOutput) -> ();
+pub type Handler<TOutput> = fn(&mut CommandContext<TOutput>) -> ();
 
 pub fn new<TOutput: Output>(
     name: &str,
@@ -21,4 +22,9 @@ pub struct Command<TOutput: Output> {
     pub name: String,
     pub description: String,
     pub handler: Handler<TOutput>,
+}
+
+pub struct CommandContext<'a, TOutput: Output> {
+    pub application: &'a Application<TOutput>,
+    pub output: &'a mut TOutput,
 }

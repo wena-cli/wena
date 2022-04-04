@@ -7,5 +7,5 @@ fn it_runs() {
 
     app.run_with_arguments(&mut output, vec![]);
 
-    assert_eq!(output.contents, "Listing commands.\n");
+    assert_eq!(output.contents, "\n  my-application: 0.0.1\n\n");
 }
