@@ -46,8 +46,8 @@ fn main() {
     let mut output = console::new();
 
     wena::new("Application name", "0.0.1")
-        .command("hello", "Displays hello", |output: &mut Console| {
-            output.writeln("Hello, world!");
+        .command("hello", "Displays hello", |command| {
+            command.output.writeln("Hello, world!");
         })
         .run(&mut output);
 }
