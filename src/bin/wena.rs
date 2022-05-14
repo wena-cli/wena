@@ -1,12 +1,7 @@
-use wena::output::console::*;
-use wena::output::*;
-
 fn main() {
-    let mut output = console::new();
-
-    wena::new::<Console>("My application", "0.0.1")
-        .command("hello", "Displays hello", |command| {
-            command.output.writeln("Hello, world!");
-        })
-        .run(&mut output);
+    wena::app("my-application", "0.0.1", vec![
+        wena::command("hello", "Displays hello", |app| {
+            app.output.writeln("Hello, world!");
+        }),
+    ]).run();
 }

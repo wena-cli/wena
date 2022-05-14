@@ -1,40 +1,41 @@
 use crate::commands::Command;
-use crate::commands::Handler;
+use crate::output;
 use crate::output::Output;
+use crate::input;
+use crate::input::Input;
 
-pub fn new<TOutput: Output>(name: &str, version: &str) -> Application<TOutput> {
+pub fn new(options: Options) -> Application {
     Application {
-        name: name.to_string(),
-        version: version.to_string(),
-        commands: Vec::new(),
+        name: options.name.to_string(),
+        version: options.version.to_string(),
+        commands: options.commands.unwrap_or_default(),
+        input: options.input.unwrap_or_else(input::null::new),
+        output: options.output.unwrap_or_else(output::console::new),
     }
 }
 
-pub struct Application<TOutput: Output> {
+pub struct Application {
     pub name: String,
     pub version: String,
-    pub commands: Vec<Command<TOutput>>,
+    pub commands: Vec<Command>,
+    pub input: Box<dyn Input> ,
+    pub output: Box<dyn Output>,
 }
 
-impl<TOutput: Output> Application<TOutput> {
-    pub fn command(
-        &mut self,
-        name: &str,
-        description: &str,
-        callback: Handler<TOutput>,
-    ) -> &mut Application<TOutput> {
-        let command = crate::commands::new::<TOutput>(name, description, callback);
+pub struct Options<'a> {
+    pub name: &'a str,
+    pub version: &'a str,
+    pub commands: Option<Vec<Command>>,
+    pub input: Option<Box<dyn Input>>,
+    pub output: Option<Box<dyn Output>>,
+}
 
-        let _ = &self.commands.push(command);
-
-        self
+impl Application {
+    pub fn run(&self) {
+        self.run_with_arguments(std::env::args().collect());
     }
 
-    pub fn run(&self, output: &mut TOutput) {
-        self.run_with_arguments(output, std::env::args().collect());
-    }
-
-    pub fn run_with_arguments(&self, output: &mut TOutput, arguments: Vec<String>) {
-        crate::runner::run::<TOutput>(self, arguments, output);
+    pub fn run_with_arguments(&self, arguments: Vec<String>) {
+        crate::runner::run(self, arguments);
     }
 }

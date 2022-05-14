@@ -1,7 +1,7 @@
 use crate::output::Output;
 
-pub fn new() -> Console {
-    Console {}
+pub fn new() -> Box<dyn Output> {
+    Box::new(Console {})
 }
 
 pub struct Console {
@@ -9,7 +9,7 @@ pub struct Console {
 }
 
 impl Output for Console {
-    fn writeln(&mut self, string: &str) {
-        println!("{}", string);
+    fn writeln(&self, string: &str) {
+        println!("{}",  string);
     }
 }

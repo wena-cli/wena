@@ -1,12 +1,9 @@
-use crate::commands::CommandContext;
 use crate::application::Application;
-use crate::output::Output;
 use clap::Command;
 
-pub fn run<TOutput: Output>(
-    application: &Application<TOutput>,
+pub fn run(
+    application: &Application,
     input: Vec<String>,
-    output: &mut TOutput,
 ) {
     let mut command = Command::new(&application.name);
 
@@ -26,22 +23,13 @@ pub fn run<TOutput: Output>(
                     .iter()
                     .find(|command| command.name == name)
                     .unwrap()
-                    .handler)(&mut CommandContext::<TOutput> {
-                        application,
-                        output,
-                    });
+                    .handler)(application);
             } else {
-                (crate::commands::list::new().handler)(&mut CommandContext::<TOutput> {
-                    application,
-                    output,
-                });
+                (crate::commands::list::new().handler)(application);
             }
         }
         Err(_) => {
-            (crate::commands::invalid::new().handler)(&mut CommandContext::<TOutput> {
-                application,
-                output,
-            });
+            (crate::commands::invalid::new().handler)(application);
         }
     }
 }

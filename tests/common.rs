@@ -1,4 +1,1 @@
-mod commands {
-    mod invalid;
-    mod list;
-}
+mod fixtures;

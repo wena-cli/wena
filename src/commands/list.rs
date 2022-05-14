@@ -1,13 +1,27 @@
-use crate::commands::Command;
-use crate::output::Output;
+use crate::commands::*;
 
-pub fn new<TOutput: Output>() -> Command<TOutput> {
-    crate::commands::new::<TOutput>("list", "Displays the application commands", |command| {
-        let name = command.application.name.clone();
-        let version = command.application.version.clone();
+pub fn new() -> Command {
+    crate::commands::new("list", "Displays the application commands", | app | {
+        let name = app.name.clone().bold().white();
+        let version = app.version.clone().green().bold();
 
-        command.output.writeln("");
-        command.output.writeln(&format!("  {}: {}", name, version));
-        command.output.writeln("");
+        app.output.writeln("");
+        app.output.writeln(&format!("  {} : {}", name, version));
+
+        let executable = std::env::current_exe().unwrap();
+        let binary = executable.file_name().unwrap().to_str().unwrap();
+        let usage = "USAGE:".bold().yellow();
+
+        app.output.writeln("");
+        app.output.writeln(&format!("  {} {} <command> [options] [flags]", usage, binary));
+
+        for subcommand in &app.commands {
+            let name = subcommand.name.clone().bold().white();
+            // let description = subcommand.description.clone().white();
+
+            app.output.writeln(&format!("         wena {}", name));
+        }
+
+        app.output.writeln("");
     })
 }

@@ -39,24 +39,21 @@ wena = "0.0.1"
 After, modify your `src/main.rs` file, and create your CLI application:
 
 ```rs
-use wena::output::console::*;
-use wena::output::*;
+use wena;
 
 fn main() {
-    let mut output = console::new();
-
-    wena::new("Application name", "0.0.1")
-        .command("hello", "Displays hello", |command| {
-            command.output.writeln("Hello, world!");
-        })
-        .run(&mut output);
+    wena::app("my-application", "0.0.1", vec![
+        wena::command("hello", "Displays hello", |app| {
+            app.output.writeln("Hello, world!");
+        }),
+    ]).run();
 }
 ```
 
 Finally, compile and run the with `cargo run`. You should see the following:
 
 ```
-  TODO...
+cargo run -q --
 ```
 
 ## License
