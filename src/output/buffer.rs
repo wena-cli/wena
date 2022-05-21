@@ -1,18 +1,19 @@
 use crate::output::Output;
 
-pub fn new() -> Box<Buffer> {
+pub fn new() -> Box<Buffer> 
+{
     Box::new(Buffer {
-        // contents: String::from(""),
+        contents: String::from(""),
     })
 }
 
 pub struct Buffer {
-    // contents: String,
+    pub contents: String,
 }
 
 impl Output for Buffer {
-    fn writeln(&self, _string: &str) {
-        // self.contents.push_str(string);
-        // self.contents.push_str("\n");
+    fn writeln(&mut self, string: &str) {
+        self.contents.push_str(string);
+        self.contents.push_str("\n");
     }
 }

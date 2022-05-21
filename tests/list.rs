@@ -2,7 +2,7 @@ mod fixtures;
 
 #[test]
 fn it_runs() {
-    let app = fixtures::app(Vec::new());
+    let (app, output) = fixtures::app(Vec::new());
 
     app.run_with_arguments(vec![]);
 

@@ -1,7 +1,7 @@
 use crate::commands::*;
 
-pub fn new() -> Command {
-    crate::commands::new("list", "Displays the application commands", | app | {
+pub fn new<TInput : Input, TOutput : Output>() -> Command<TInput, TOutput> {
+    crate::commands::new::<TInput, TOutput>("list", "Displays the application commands", | app | {
         let name = app.name.clone().bold().white();
         let version = app.version.clone().green().bold();
 

@@ -1,41 +1,39 @@
 use crate::commands::Command;
-use crate::output;
 use crate::output::Output;
-use crate::input;
 use crate::input::Input;
 
-pub fn new(options: Options) -> Application {
+pub fn new<TInput : Input, TOutput : Output>(options: Options<TInput, TOutput>) -> Application<TInput, TOutput> {
     Application {
         name: options.name.to_string(),
         version: options.version.to_string(),
-        commands: options.commands.unwrap_or_default(),
-        input: options.input.unwrap_or_else(input::null::new),
-        output: options.output.unwrap_or_else(output::console::new),
+        commands: options.commands,
+        input: options.input,
+        output: options.output,
     }
 }
 
-pub struct Application {
+pub struct Application<TInput : Input + ?Sized, TOutput : Output + ?Sized> {
     pub name: String,
     pub version: String,
-    pub commands: Vec<Command>,
-    pub input: Box<dyn Input> ,
-    pub output: Box<dyn Output>,
+    pub commands: Vec<Command<TInput, TOutput>>,
+    pub input: Box<TInput> ,
+    pub output: Box<TOutput>,
 }
 
-pub struct Options<'a> {
+pub struct Options<'a, TInput: Input, TOutput : Output> {
     pub name: &'a str,
     pub version: &'a str,
-    pub commands: Option<Vec<Command>>,
-    pub input: Option<Box<dyn Input>>,
-    pub output: Option<Box<dyn Output>>,
+    pub commands: Vec<Command<TInput, TOutput>>,
+    pub input: Box<TInput>,
+    pub output: Box<TOutput>,
 }
 
-impl Application {
-    pub fn run(&self) {
-        self.run_with_arguments(std::env::args().collect());
+impl<TInput: Input, TOutput: Output> Application<TInput, TOutput> {
+    pub fn run(&mut self) -> &Application<TInput, TOutput> {
+        self.run_with_arguments()
     }
 
-    pub fn run_with_arguments(&self, arguments: Vec<String>) {
-        crate::runner::run(self, arguments);
+    pub fn run_with_arguments(&mut self) -> &Application<TInput, TOutput> {
+        crate::runner::run::<TInput, TOutput>(self)
     }
 }

@@ -1,7 +1,9 @@
+use crate::output::Output;
+use crate::input::Input;
 use crate::commands::Command;
 
-pub fn new() -> Command {
-    crate::commands::new("invalid", "Displays an invalid command", |command| {
-        command.output.writeln("Command not found.");
+pub fn new<TInput : Input, TOutput : Output>() -> Command<TInput, TOutput> {
+    crate::commands::new::<TInput, TOutput>("invalid", "Displays an invalid command", |app| {
+        app.output.writeln("Command not found.");
     })
 }
