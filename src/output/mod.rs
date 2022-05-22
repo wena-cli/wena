@@ -24,7 +24,7 @@ pub trait Output {
 fn label(output: &mut dyn Output, label: &str, message: &str) {
     let label_title = &format!(" {} ", label.clone().bold().white(),);
 
-    let label_message = &(*message).clone();
+    let label_message = message.clone();
 
     output.writeln(&format!("  {} {}", label_title, label_message));
 }
