@@ -8,9 +8,7 @@ use wena::*;
 fn it_has_a_name() {
     let app = fixtures::app(vec![], vec![]);
 
-    dbg!(app.output.contents.clone());
-
-    assert_output(app, "my-application : 0.0.1");
+    assert_output(app, "my-application");
 }
 
 #[test]
@@ -28,7 +26,7 @@ fn it_has_no_commands_by_default() {
 }
 
 #[test]
-fn it_may_have_commands() {
+fn it_can_have_commands() {
     let app = fixtures::app(
         vec![],
         vec![wena::command("hello", "Displays hello", |_| {})],
