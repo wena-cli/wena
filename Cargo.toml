@@ -8,3 +8,4 @@ version = "0.0.1"
 [dependencies]
 clap = { version = "3.1.6", features = ["derive"] }
 colored = { version = "2" }
+regex = { version = "1" }

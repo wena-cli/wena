@@ -1,24 +1,26 @@
-use crate::input::Input;
 pub use colored::*;
 pub mod application;
 pub mod commands;
 pub mod input;
 pub mod output;
 pub use input::null::*;
+pub use input::inline::*;
 pub use output::console::*;
 pub use output::Output;
+pub use input::argv::Argv;
+pub use input::Input;
 
-use crate::input::null;
+use crate::input::argv;
 use crate::output::console;
 
 mod runner;
 
-pub fn app(name: &str, version: &str, commands: Vec<commands::Command<null::Null, console::Console>>) -> application::Application<null::Null, console::Console> {
-    from::<Null, Console>({ application::Options {
+pub fn app(name: &str, version: &str, commands: Vec<commands::Command<Argv, console::Console>>) -> application::Application<Argv, console::Console> {
+    from::<Argv, Console>({ application::Options {
         name,
         version,
         commands,
-        input: null::new(),
+        input: argv::new(),
         output: console::new(),
     }})
 }

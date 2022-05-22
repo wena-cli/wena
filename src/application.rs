@@ -3,6 +3,7 @@ use crate::output::Output;
 use crate::input::Input;
 
 pub fn new<TInput : Input, TOutput : Output>(options: Options<TInput, TOutput>) -> Application<TInput, TOutput> {
+
     Application {
         name: options.name.to_string(),
         version: options.version.to_string(),

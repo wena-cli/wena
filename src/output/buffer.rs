@@ -14,6 +14,6 @@ pub struct Buffer {
 impl Output for Buffer {
     fn writeln(&mut self, string: &str) {
         self.contents.push_str(string);
-        self.contents.push_str("\n");
+        self.contents.push('\n');
     }
 }

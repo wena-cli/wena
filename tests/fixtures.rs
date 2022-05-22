@@ -1,22 +1,22 @@
+use wena::application::Application;
 use wena::application;
 use wena::commands::Command;
-use wena::input;
-use wena::output;
+use wena::output::buffer;
+use wena::input::inline;
+use wena::input::inline::Inline;
+use wena::output::buffer::Buffer;
 
-pub fn app(input: Vec<String>, commands: Vec<Command>) {
-    
-}
-
-
-pub fn app(input: Box<dyn input::Input>, output: Box<dyn output::Output>, commands: Vec<commands::Command>) -> application::Application {
-    let
-    
-    
-    wena::from({ application::Options {
+pub fn app(input: Vec<String>, commands: Vec<Command<Inline, Buffer>>) -> Application<Inline, Buffer> {
+    let mut app = application::new(application::Options {
         name: "my-application",
         version: "0.0.1",
-        commands: commands,
-        input: input,
-        output: output,
-    }})
+        commands,
+        input: inline::new(input),
+        output: buffer::new(),
+    });
+
+    app.run();
+
+    app
 }
+
