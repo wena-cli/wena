@@ -5,7 +5,7 @@ fn main() {
         "my-application",
         "0.0.1",
         vec![wena::command("hello", "Displays hello", |app| {
-            app.output.info("Hello Wolrd");
+            app.output.info("Hello World");
         })],
     )
     .run();
