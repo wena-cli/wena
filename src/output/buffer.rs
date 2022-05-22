@@ -14,7 +14,7 @@ pub struct Buffer {
 impl Output for Buffer {
     fn writeln(&mut self, string: &str) {
         let strip_sequeces_regex = Regex::new(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])").unwrap();
-        let strip_sequeces_string = strip_sequeces_regex.replace_all(&string, "");
+        let strip_sequeces_string = strip_sequeces_regex.replace_all(string, "");
 
         self.contents.push_str(&strip_sequeces_string);
         self.contents.push('\n');

@@ -2,7 +2,7 @@ use crate::input::Input;
 use clap::ArgMatches;
 
 pub fn new(binary_name: String, arguments: Vec<String>) -> Box<Inline> {
-    let append = vec![binary_name.clone()];
+    let append = vec![binary_name];
 
     Box::new(Inline {
         arguments: [&append[..], &arguments[..]].concat(),
