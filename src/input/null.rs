@@ -1,5 +1,5 @@
+use crate::input::Input;
 use clap::ArgMatches;
-use crate::input::{ Input };
 
 pub fn new() -> Box<Null> {
     Box::new(Null {
@@ -13,9 +13,7 @@ pub struct Null {
 
 impl Input for Null {
     fn argument(&self, name: &str) -> Result<String, String> {
-        Err(format!(
-            "Argument not found: {}.", name
-        ))
+        Err(format!("Argument not found: {}.", name))
     }
 
     fn with_arguments_matches(&self, _matches: ArgMatches) -> Box<Null> {

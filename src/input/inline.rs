@@ -1,29 +1,35 @@
+use crate::input::Input;
 use clap::ArgMatches;
-use crate::input::{ Input };
 
-pub fn new(arguments: Vec<String>) -> Box<Inline> {
+pub fn new(binary_name: String, arguments: Vec<String>) -> Box<Inline> {
+    let append = vec![binary_name.clone()];
+
     Box::new(Inline {
-        arguments,
-        // arguments_matches: None,
+        arguments: [&append[..], &arguments[..]].concat(),
+        arguments_matches: None,
     })
 }
 
 pub struct Inline {
     arguments: Vec<String>,
-    // arguments_matches: Option<ArgMatches>,
+    arguments_matches: Option<ArgMatches>,
 }
 
 impl Input for Inline {
     fn argument(&self, name: &str) -> Result<String, String> {
-        Err(format!(
-            "Argument not found: {}.", name
-        ))
+        if let Some(arguments_matches) = &self.arguments_matches {
+            if let Some(value) = arguments_matches.value_of(name) {
+                return Ok(value.to_string());
+            }
+        }
+
+        Err(format!("Argument not found: {}.", name))
     }
 
-    fn with_arguments_matches(&self, _matches: ArgMatches) -> Box<Inline> {
+    fn with_arguments_matches(&self, matches: ArgMatches) -> Box<Inline> {
         Box::new(Inline {
             arguments: self.arguments.clone(),
-            // arguments_matches: Some(matches),
+            arguments_matches: Some(matches),
         })
     }
 

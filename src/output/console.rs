@@ -10,6 +10,6 @@ pub struct Console {
 
 impl Output for Console {
     fn writeln(&mut self, string: &str) {
-        println!("{}",  string);
+        println!("{}", string);
     }
 }

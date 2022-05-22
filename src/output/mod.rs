@@ -4,29 +4,27 @@ pub mod console;
 use colored::*;
 
 pub trait Output {
-    fn error(&mut self, string: &str) -> () {
-        label("ERROR", string); 
+    fn error(&mut self, string: &str) -> ()
+    where
+        Self: Sized,
+    {
+        label(self, "ERROR", string);
     }
 
-    fn info(&mut self, string: &str) -> () {
-        label("INFO", string); 
+    fn info(&mut self, string: &str) -> ()
+    where
+        Self: Sized,
+    {
+        label(self, "INFO", string);
     }
 
     fn writeln(&mut self, string: &str);
 }
 
-fn label(title: &str, message: &str) -> ()
-{
-    let label_title = &format!(
-        " {} ",
-        title.clone().bold().white(),
-    );
-    
+fn label(output: &mut dyn Output, label: &str, message: &str) {
+    let label_title = &format!(" {} ", label.clone().bold().white(),);
+
     let label_message = message.clone();
 
-    dbg!(label_title);
-
-    println!("{}", &format!(
-        "  {} {}", label_title, label_message
-    ));
+    output.writeln(&format!("  {} {}", label_title, label_message));
 }

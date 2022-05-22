@@ -1,7 +1,7 @@
 use crate::commands::*;
 
-pub fn new<TInput : Input, TOutput : Output>() -> Command<TInput, TOutput> {
-    crate::commands::new::<TInput, TOutput>("list", "Displays the application commands", | app | {
+pub fn new<TInput: Input, TOutput: Output>() -> Command<TInput, TOutput> {
+    crate::commands::new::<TInput, TOutput>("list", "Displays the application commands", |app| {
         let name = app.name.clone().bold().white();
         let version = app.version.clone().green().bold();
 
@@ -13,7 +13,10 @@ pub fn new<TInput : Input, TOutput : Output>() -> Command<TInput, TOutput> {
         let usage = "USAGE:".bold().yellow();
 
         app.output.writeln("");
-        app.output.writeln(&format!("  {} {} <command> [options] [flags]", usage, binary));
+        app.output.writeln(&format!(
+            "  {} {} <command> [options] [flags]",
+            usage, binary
+        ));
 
         for subcommand in &app.commands {
             let name = subcommand.name.clone().bold().white();

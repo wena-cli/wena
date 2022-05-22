@@ -1,7 +1,7 @@
-use regex::Regex;
-use crate::output::Output;
 use crate::input::Input;
+use crate::output::Output;
 pub use colored::*;
+use regex::Regex;
 
 pub mod invalid;
 pub mod list;
@@ -10,8 +10,11 @@ use crate::application::Application;
 
 pub type Handler<TInput, TOutput> = fn(&mut Application<TInput, TOutput>) -> ();
 
-pub fn new<TInput : Input, TOutput : Output>(signature: &str, description: &str, handler: Handler<TInput, TOutput>) -> Command<TInput, TOutput> {
-
+pub fn new<TInput: Input, TOutput: Output>(
+    signature: &str,
+    description: &str,
+    handler: Handler<TInput, TOutput>,
+) -> Command<TInput, TOutput> {
     let name = Regex::new("([^\\s]+)")
         .unwrap()
         .captures(signature)
@@ -35,7 +38,7 @@ pub fn new<TInput : Input, TOutput : Output>(signature: &str, description: &str,
     }
 }
 
-pub struct Command<TInput : Input + ?Sized, TOutput : Output + ?Sized> {
+pub struct Command<TInput: Input + ?Sized, TOutput: Output + ?Sized> {
     pub name: String,
     pub description: String,
     pub handler: Handler<TInput, TOutput>,

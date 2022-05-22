@@ -1,9 +1,10 @@
 use crate::commands::Command;
-use crate::output::Output;
 use crate::input::Input;
+use crate::output::Output;
 
-pub fn new<TInput : Input, TOutput : Output>(options: Options<TInput, TOutput>) -> Application<TInput, TOutput> {
-
+pub fn new<TInput: Input, TOutput: Output>(
+    options: Options<TInput, TOutput>,
+) -> Application<TInput, TOutput> {
     Application {
         name: options.name.to_string(),
         version: options.version.to_string(),
@@ -13,15 +14,15 @@ pub fn new<TInput : Input, TOutput : Output>(options: Options<TInput, TOutput>) 
     }
 }
 
-pub struct Application<TInput : Input + ?Sized, TOutput : Output + ?Sized> {
+pub struct Application<TInput: Input + ?Sized, TOutput: Output + ?Sized> {
     pub name: String,
     pub version: String,
     pub commands: Vec<Command<TInput, TOutput>>,
-    pub input: Box<TInput> ,
+    pub input: Box<TInput>,
     pub output: Box<TOutput>,
 }
 
-pub struct Options<'a, TInput: Input, TOutput : Output> {
+pub struct Options<'a, TInput: Input, TOutput: Output> {
     pub name: &'a str,
     pub version: &'a str,
     pub commands: Vec<Command<TInput, TOutput>>,

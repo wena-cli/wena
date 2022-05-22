@@ -1,8 +1,11 @@
+mod assertions;
 mod fixtures;
+
+use assertions::*;
 
 #[test]
 fn it_runs() {
     let app = fixtures::app(vec![], vec![]);
 
-    assert_eq!(app.output.contents, "\n  my-application: 0.0.1\n\n");
+    assert_output(app, "my-application : 0.0.1");
 }
