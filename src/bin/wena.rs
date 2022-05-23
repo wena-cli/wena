@@ -9,7 +9,9 @@ fn main() {
                 .handler(|application| {
                     let name = application.input.argument("name");
 
-                    application.output.info(&format!("Hello, {}!", name));
+                    application
+                        .output
+                        .info(format!("Hello, {}!", name).as_str());
                 })
         })
         .run();

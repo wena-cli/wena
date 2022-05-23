@@ -1,6 +1,8 @@
+pub mod alerts;
 pub mod buffer;
 pub mod console;
 
+use crate::output::alerts::Alert;
 use colored::*;
 
 pub trait Output {
@@ -8,23 +10,15 @@ pub trait Output {
     where
         Self: Sized,
     {
-        label(self, "ERROR", string);
+        Alert::new("ERROR", string, Color::White, Color::Red).writeln(self);
     }
 
     fn info(&mut self, string: &str)
     where
         Self: Sized,
     {
-        label(self, "INFO", string);
+        Alert::new("INFO", string, Color::White, Color::Blue).writeln(self);
     }
 
     fn writeln(&mut self, string: &str);
-}
-
-fn label(output: &mut dyn Output, label: &str, message: &str) {
-    let label_title = &format!(" {} ", label.clone().bold().white(),);
-
-    let label_message = message.clone();
-
-    output.writeln(&format!("  {} {}", label_title, label_message));
 }
