@@ -1,5 +1,5 @@
 <p align="center">
-    <img title="Wena" width="100%" src="https://raw.githubusercontent.com/wena-cli/wena/main/art/logo.jpg" />
+    <img title="Wena" width="50%" src="https://raw.githubusercontent.com/wena-cli/wena/main/art/logo.png" />
 </p>
 
 <p align="center">
