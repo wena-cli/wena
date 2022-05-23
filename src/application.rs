@@ -1,4 +1,4 @@
-use crate::commands::Command;
+use crate::commands::{self, Command};
 use crate::input::Input;
 use crate::output::Output;
 
@@ -31,11 +31,25 @@ pub struct Options<'a, TInput: Input, TOutput: Output> {
 }
 
 impl<TInput: Input, TOutput: Output> Application<TInput, TOutput> {
-    pub fn run(&mut self) -> &Application<TInput, TOutput> {
-        self.run_with_arguments()
+    pub fn command(
+        &mut self,
+        name: &str,
+        resolver: impl Fn(Command<TInput, TOutput>) -> Command<TInput, TOutput>,
+    ) -> &mut Application<TInput, TOutput> {
+        let command = commands::new::<TInput, TOutput>(name);
+
+        self.commands.push(resolver(command));
+
+        self
     }
 
-    pub fn run_with_arguments(&mut self) -> &Application<TInput, TOutput> {
+    pub fn version(&mut self, version: &str) -> &mut Application<TInput, TOutput> {
+        self.version = version.to_string();
+
+        self
+    }
+
+    pub fn run(&mut self) -> &Application<TInput, TOutput> {
         crate::runner::run::<TInput, TOutput>(self)
     }
 }

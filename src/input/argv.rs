@@ -1,6 +1,8 @@
-use crate::input::Input;
-use clap::ArgMatches;
 use std::env;
+
+use clap::ArgMatches;
+
+use crate::input::Input;
 
 pub fn new() -> Box<Argv> {
     let args = env::args();
@@ -17,14 +19,14 @@ pub struct Argv {
 }
 
 impl Input for Argv {
-    fn argument(&self, name: &str) -> Result<String, String> {
+    fn argument(&self, name: &str) -> &str {
         if let Some(arguments_matches) = &self.arguments_matches {
             if let Some(value) = arguments_matches.value_of(name) {
-                return Ok(value.to_string());
+                return value;
             }
         }
 
-        Err(format!("Argument not found: {}.", name))
+        panic!("Argument not found: {}.", name);
     }
 
     fn with_arguments_matches(&self, matches: ArgMatches) -> Box<Argv> {

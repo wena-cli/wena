@@ -27,10 +27,7 @@ fn it_has_no_commands_by_default() {
 
 #[test]
 fn it_can_have_commands() {
-    let app = fixtures::app(
-        vec![],
-        vec![wena::command("hello", "Displays hello", |_| {})],
-    );
+    let app = fixtures::app(vec![], vec![wena::command("hello").handler(|_| {})]);
 
     assert_eq!(1, app.commands.len());
 }
@@ -39,7 +36,7 @@ fn it_can_have_commands() {
 fn it_run_commands() {
     let app = fixtures::app(
         vec!["hello".to_string()],
-        vec![wena::command("hello", "Displays hello", |app| {
+        vec![wena::command("hello").handler(|app| {
             app.output.writeln("Hello, world!");
         })],
     );

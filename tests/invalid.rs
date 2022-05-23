@@ -8,7 +8,7 @@ use wena::*;
 fn it_runs() {
     let app = fixtures::app(
         vec!["invalid command".to_string()],
-        vec![wena::command("hello", "Displays hello", |app| {
+        vec![wena::command("hello").handler(|app| {
             app.output.writeln("Hello, world!");
         })],
     );

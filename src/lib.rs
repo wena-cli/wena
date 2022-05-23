@@ -2,6 +2,7 @@ pub mod application;
 pub mod commands;
 pub mod input;
 pub mod output;
+use clap::Arg;
 pub use colored::*;
 pub use input::argv::Argv;
 pub use input::inline::*;
@@ -15,16 +16,12 @@ mod runner;
 use crate::input::argv;
 use crate::output::console;
 
-pub fn app(
-    name: &str,
-    version: &str,
-    commands: Vec<commands::Command<Argv, console::Console>>,
-) -> application::Application<Argv, console::Console> {
+pub fn app(name: &str) -> application::Application<Argv, console::Console> {
     from::<Argv, Console>({
         application::Options {
             name,
-            version,
-            commands,
+            version: "1.0.0",
+            commands: vec![],
             input: argv::new(),
             output: console::new(),
         }
@@ -37,10 +34,10 @@ pub fn from<TInput: Input, TOutput: Output>(
     application::new(options)
 }
 
-pub fn command<TInput: Input, TOutput: Output>(
-    name: &str,
-    description: &str,
-    handler: commands::Handler<TInput, TOutput>,
-) -> commands::Command<TInput, TOutput> {
-    commands::new::<TInput, TOutput>(name, description, handler)
+pub fn argument(name: &str) -> clap::Arg {
+    Arg::new(name)
+}
+
+pub fn command<TInput: Input, TOutput: Output>(name: &str) -> commands::Command<TInput, TOutput> {
+    commands::new::<TInput, TOutput>(name)
 }

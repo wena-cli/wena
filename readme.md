@@ -42,11 +42,17 @@ After, modify your `src/main.rs` file, and create your CLI application:
 use wena;
 
 fn main() {
-    wena::app("my-application", "0.0.1", vec![
-        wena::command("hello", "Displays hello", |app| {
-            app.output.writeln("Hello, world!");
-        }),
-    ]).run();
+    wena::app("your-app-name")
+        .version("0.0.1")
+        .command("hello", |command| {
+            command
+                .argument("name", |argument| argument)
+                .handler(|application| {
+                    let name = application.input.argument("name");
+
+                    application.output.info(&format!("Hello, {}!", name));
+                })
+        }).run();
 }
 ```
 
