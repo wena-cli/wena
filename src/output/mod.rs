@@ -2,7 +2,7 @@ pub mod alerts;
 pub mod buffer;
 pub mod console;
 
-use crate::output::alerts::Alert;
+use alerts::Alert;
 use colored::*;
 
 pub trait Output {

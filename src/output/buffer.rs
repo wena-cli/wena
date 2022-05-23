@@ -1,4 +1,4 @@
-use crate::output::Output;
+use crate::Output;
 use regex::Regex;
 
 pub fn new() -> Box<Buffer> {

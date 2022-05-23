@@ -1,5 +1,5 @@
 use crate::input::Input;
-use crate::output::Output;
+use crate::Output;
 use clap::Arg;
 pub use colored::*;
 

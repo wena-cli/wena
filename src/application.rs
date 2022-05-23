@@ -1,6 +1,6 @@
 use crate::commands::{self, Command};
 use crate::input::Input;
-use crate::output::Output;
+use crate::Output;
 
 pub fn new<TInput: Input, TOutput: Output>(
     options: Options<TInput, TOutput>,

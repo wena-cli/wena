@@ -1,4 +1,4 @@
-use crate::commands::*;
+use super::*;
 
 pub fn new<TInput: Input, TOutput: Output>() -> Command<TInput, TOutput> {
     crate::commands::new::<TInput, TOutput>("list")

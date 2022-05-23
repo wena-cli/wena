@@ -1,4 +1,4 @@
-use crate::input::Input;
+use crate::Input;
 use clap::ArgMatches;
 
 pub fn new() -> Box<Null> {

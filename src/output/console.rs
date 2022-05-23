@@ -1,4 +1,4 @@
-use crate::output::Output;
+use crate::Output;
 
 pub fn new() -> Box<Console> {
     Box::new(Console {})

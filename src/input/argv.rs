@@ -2,7 +2,7 @@ use std::env;
 
 use clap::ArgMatches;
 
-use crate::input::Input;
+use crate::Input;
 
 pub fn new() -> Box<Argv> {
     let args = env::args();

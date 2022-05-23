@@ -1,6 +1,6 @@
 use crate::application::Application;
 use crate::input::Input;
-use crate::output::Output;
+use crate::Output;
 use clap::Command;
 
 pub fn run<TInput: Input, TOutput: Output>(
