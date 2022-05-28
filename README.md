@@ -3,8 +3,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/wena-cli/wena/actions"><img src="https://img.shields.io/github/workflow/status/wena-cli/wena/Tests.svg" alt="Build Status"></img></a>
-  <a href="https://packagist.org/packages/wena-cli/wena"><img src="https://img.shields.io/packagist/l/wena-cli/wena.svg" alt="License"></a>
+    <a href="https://crates.io/crates/wena"><img src="https://img.shields.io/crates/v/wena" alt="Build Status"></img></a>
+    <a href="https://github.com/wena-cli/wena/actions"><img src="https://img.shields.io/github/workflow/status/wena-cli/wena/Tests.svg" alt="Build Status"></img></a>
+    <a href="https://deps.rs/repo/github/wena-cli/wena"><img src="https://deps.rs/repo/github/wena-cli/wena/status.svg" alt="Dependency status"></a>
+    <a href="https://github.com/wena-cli/wena/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-informational" alt="License"></a>
 </p>
 
 Wena was created by [Nuno Maduro](https://github.com/nunomaduro), and is a [Rust Lang](https://www.rust-lang.org) micro-framework that provides an elegant starting point for your console application.
