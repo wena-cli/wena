@@ -1,8 +1,10 @@
+pub mod components;
 pub mod input;
 pub mod output;
 
 pub use application::{Application, ApplicationOptions};
 pub use commands::Command;
+pub use components::Alert;
 pub use input::Input;
 pub use output::Output;
 

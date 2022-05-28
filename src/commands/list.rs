@@ -16,15 +16,15 @@ impl ListCommandFactory {
                 let name = app.name.clone().bold().white();
                 let version = app.version.clone().green().bold();
 
-                app.output.writeln("");
-                app.output.writeln(&format!("  {} : {}", name, version));
+                app.output.writeln("".to_string());
+                app.output.writeln(format!("  {} : {}", name, version));
 
                 let executable = std::env::current_exe().unwrap();
                 let binary = executable.file_name().unwrap().to_str().unwrap();
                 let usage = "USAGE:".bold().yellow();
 
-                app.output.writeln("");
-                app.output.writeln(&format!(
+                app.output.writeln("".to_string());
+                app.output.writeln(format!(
                     "  {} {} <command> [options] [flags]",
                     usage, binary
                 ));
@@ -33,10 +33,10 @@ impl ListCommandFactory {
                     let name = subcommand.name.clone().bold().white();
                     // let description = subcommand.description.clone().white();
 
-                    app.output.writeln(&format!("         wena {}", name));
+                    app.output.writeln(format!("         wena {}", name));
                 }
 
-                app.output.writeln("");
+                app.output.writeln(String::from(""));
             })
     }
 }

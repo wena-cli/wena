@@ -1,4 +1,4 @@
-use wena::*;
+use wena::{Alert, *};
 
 fn main() {
     wena::app("wena")
@@ -9,7 +9,9 @@ fn main() {
                 .handler(|app| {
                     let name = app.input.argument("name");
 
-                    app.output.info(format!("Hello, {}!", name).as_str());
+                    app.output.writeln(Alert::info(
+                        format!("Hello, {}!", name).as_str(),
+                    ));
                 })
         })
         .run();

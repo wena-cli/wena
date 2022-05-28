@@ -13,7 +13,7 @@ impl Console {
 }
 
 impl Output for Console {
-    fn writeln(&mut self, string: &str) {
+    fn writeln(&mut self, string: String) {
         println!("{}", string);
     }
 }

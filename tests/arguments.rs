@@ -15,7 +15,7 @@ fn it_reads_arguments() {
                 .handler(|app| {
                     let name = app.input.argument("name");
 
-                    app.output.writeln(format!("Hello, {}!", name).as_str());
+                    app.output.writeln(format!("Hello, {}!", name));
                 }),
         ],
     );

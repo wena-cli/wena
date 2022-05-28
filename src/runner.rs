@@ -1,6 +1,8 @@
 use clap::Command;
+use colored::*;
 
 use crate::application::Application;
+use crate::components::Alert;
 use crate::input::Input;
 use crate::output::Output;
 
@@ -35,10 +37,10 @@ pub fn run<TInput: Input, TOutput: Output>(
 
                 for argument in &subcommand.arguments {
                     if !mached_command_matches.is_present(argument.get_id()) {
-                        application.output.error(&format!(
-                            "Missing argument: {}.",
-                            argument.get_id()
-                        ));
+                        application.output.writeln(Alert::error(&format!(
+                            "Argument {} is required.",
+                            argument.get_id().bold().white().italic(),
+                        )));
 
                         return application;
                     }

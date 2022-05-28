@@ -39,7 +39,7 @@ fn it_run_commands() {
     let app = fixtures::app(
         vec!["hello".to_string()],
         vec![wena::command("hello").handler(|app| {
-            app.output.writeln("Hello, world!");
+            app.output.writeln("Hello, world!".to_string());
         })],
     );
 

@@ -1,4 +1,5 @@
 use crate::commands::Command;
+use crate::components::Alert;
 use crate::input::Input;
 use crate::output::Output;
 
@@ -11,7 +12,7 @@ impl InvalidCommandFactory {
         Command::new("invalid")
             .description("Displays an invalid command")
             .handler(|app| {
-                app.output.error("Command not found.");
+                app.output.writeln(Alert::error("Command not found."));
             })
     }
 }
