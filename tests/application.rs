@@ -1,9 +1,8 @@
-use wena::output::Output;
-
 mod assertions;
 mod fixtures;
 
 use assertions::*;
+use wena::output::Output;
 
 #[test]
 fn it_has_a_name() {

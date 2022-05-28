@@ -29,6 +29,17 @@ impl Alert {
 
         alert.to_string()
     }
+
+    pub fn warn(description: &str) -> String {
+        let alert = Alert {
+            bg: Color::Yellow,
+            description: description.to_string(),
+            r#type: "WARN".to_string(),
+            fg: Color::White,
+        };
+
+        alert.to_string()
+    }
 }
 
 impl ToString for Alert {

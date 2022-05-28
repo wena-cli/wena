@@ -1,0 +1,3 @@
+mod components {
+    mod alerts;
+}
