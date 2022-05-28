@@ -1,8 +1,9 @@
+use wena::output::Output;
+
 mod assertions;
 mod fixtures;
 
 use assertions::*;
-use wena::*;
 
 #[test]
 fn it_has_a_name() {
@@ -27,7 +28,8 @@ fn it_has_no_commands_by_default() {
 
 #[test]
 fn it_can_have_commands() {
-    let app = fixtures::app(vec![], vec![wena::command("hello").handler(|_| {})]);
+    let app =
+        fixtures::app(vec![], vec![wena::command("hello").handler(|_| {})]);
 
     assert_eq!(1, app.commands.len());
 }

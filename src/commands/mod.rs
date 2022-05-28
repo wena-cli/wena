@@ -1,23 +1,13 @@
-use crate::input::Input;
-use crate::output::Output;
-use clap::Arg;
-pub use colored::*;
+mod invalid;
+mod list;
 
-pub mod invalid;
-pub mod list;
+use clap::Arg;
+pub use invalid::InvalidCommandFactory;
+pub use list::ListCommandFactory;
 
 use crate::application::Application;
-
-pub type Handler<TInput, TOutput> = fn(&mut Application<TInput, TOutput>) -> ();
-
-pub fn new<TInput: Input, TOutput: Output>(name: &str) -> Command<TInput, TOutput> {
-    Command {
-        arguments: vec![],
-        description: String::from(""),
-        handler: |_| {},
-        name: name.to_string(),
-    }
-}
+use crate::input::Input;
+use crate::output::Output;
 
 pub struct Command<TInput: Input + ?Sized, TOutput: Output + ?Sized> {
     pub name: String,
@@ -26,7 +16,22 @@ pub struct Command<TInput: Input + ?Sized, TOutput: Output + ?Sized> {
     pub handler: Handler<TInput, TOutput>,
 }
 
-impl<TInput: Input + ?Sized, TOutput: Output + ?Sized> Command<TInput, TOutput> {
+impl<TInput: Input + ?Sized, TOutput: Output + ?Sized>
+    Command<TInput, TOutput>
+{
+    pub fn new(name: &str) -> Command<TInput, TOutput> {
+        Command {
+            arguments: vec![],
+            description: String::from(""),
+            handler: |_| {},
+            name: name.to_string(),
+        }
+    }
+}
+
+impl<TInput: Input + ?Sized, TOutput: Output + ?Sized>
+    Command<TInput, TOutput>
+{
     pub fn argument(
         mut self,
         name: &'static str,
@@ -51,3 +56,5 @@ impl<TInput: Input + ?Sized, TOutput: Output + ?Sized> Command<TInput, TOutput> 
         self
     }
 }
+
+type Handler<TInput, TOutput> = fn(&mut Application<TInput, TOutput>) -> ();

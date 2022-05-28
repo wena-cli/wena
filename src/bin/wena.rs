@@ -1,4 +1,5 @@
-use wena::*;
+use wena::input::Input;
+use wena::output::Output;
 
 fn main() {
     wena::app("wena")
@@ -6,12 +7,10 @@ fn main() {
         .command("hello", |command| {
             command
                 .argument("name", |argument| argument)
-                .handler(|application| {
-                    let name = application.input.argument("name");
+                .handler(|app| {
+                    let name = app.input.argument("name");
 
-                    application
-                        .output
-                        .info(format!("Hello, {}!", name).as_str());
+                    app.output.info(format!("Hello, {}!", name).as_str());
                 })
         })
         .run();

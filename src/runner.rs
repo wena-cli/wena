@@ -1,7 +1,8 @@
+use clap::Command;
+
 use crate::application::Application;
 use crate::input::Input;
 use crate::output::Output;
-use clap::Command;
 
 pub fn run<TInput: Input, TOutput: Output>(
     application: &mut Application<TInput, TOutput>,
@@ -10,12 +11,13 @@ pub fn run<TInput: Input, TOutput: Output>(
 
     for subcommand in &application.commands {
         command = command.subcommand(
-            Command::new(subcommand.name.to_string()).args(subcommand.arguments.clone()),
+            Command::new(subcommand.name.to_string())
+                .args(subcommand.arguments.clone()),
         );
     }
 
     match command.try_get_matches_from(application.input.to_iter()) {
-        Ok(matches) => {
+        | Ok(matches) => {
             let matched_command = matches.subcommand();
 
             if matched_command.is_some() {
@@ -33,9 +35,10 @@ pub fn run<TInput: Input, TOutput: Output>(
 
                 for argument in &subcommand.arguments {
                     if !mached_command_matches.is_present(argument.get_id()) {
-                        application
-                            .output
-                            .error(&format!("Missing argument: {}.", argument.get_id()));
+                        application.output.error(&format!(
+                            "Missing argument: {}.",
+                            argument.get_id()
+                        ));
 
                         return application;
                     }
@@ -43,11 +46,15 @@ pub fn run<TInput: Input, TOutput: Output>(
 
                 (subcommand.handler)(application);
             } else {
-                (crate::commands::list::new().handler)(application);
+                (crate::commands::ListCommandFactory::new().handler)(
+                    application,
+                );
             }
         }
-        Err(_) => {
-            (crate::commands::invalid::new().handler)(application);
+        | Err(_) => {
+            (crate::commands::InvalidCommandFactory::new().handler)(
+                application,
+            );
         }
     }
 

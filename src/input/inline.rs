@@ -1,18 +1,22 @@
-use crate::input::Input;
 use clap::ArgMatches;
 
-pub fn new(binary_name: String, arguments: Vec<String>) -> Box<Inline> {
-    let append = vec![binary_name];
-
-    Box::new(Inline {
-        arguments: [&append[..], &arguments[..]].concat(),
-        arguments_matches: None,
-    })
-}
+use crate::input::Input;
 
 pub struct Inline {
     arguments: Vec<String>,
     arguments_matches: Option<ArgMatches>,
+}
+
+impl Inline {
+    #[allow(dead_code)]
+    pub fn new(binary_name: String, arguments: Vec<String>) -> Self {
+        let append = vec![binary_name];
+
+        Inline {
+            arguments: [&append[..], &arguments[..]].concat(),
+            arguments_matches: None,
+        }
+    }
 }
 
 impl Input for Inline {

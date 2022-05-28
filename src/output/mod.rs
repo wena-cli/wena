@@ -1,9 +1,12 @@
-pub mod alerts;
-pub mod buffer;
-pub mod console;
+mod alerts;
+mod buffer;
+mod console;
+
+pub use buffer::Buffer;
+use colored::*;
+pub use console::Console;
 
 use crate::output::alerts::Alert;
-use colored::*;
 
 pub trait Output {
     fn error(&mut self, string: &str)

@@ -2,7 +2,7 @@ mod assertions;
 mod fixtures;
 
 use assertions::*;
-use wena::*;
+use wena::output::Output;
 
 #[test]
 fn it_runs() {

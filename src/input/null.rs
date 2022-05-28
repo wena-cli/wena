@@ -1,14 +1,18 @@
-use crate::input::Input;
 use clap::ArgMatches;
 
-pub fn new() -> Box<Null> {
-    Box::new(Null {
-        // ..
-    })
-}
+use crate::input::Input;
 
 pub struct Null {
     // ..
+}
+
+impl Null {
+    #[allow(dead_code)]
+    pub(crate) fn new() -> Self {
+        Null {
+            // ..
+        }
+    }
 }
 
 impl Input for Null {

@@ -4,18 +4,20 @@ use clap::ArgMatches;
 
 use crate::input::Input;
 
-pub fn new() -> Box<Argv> {
-    let args = env::args();
-
-    Box::new(Argv {
-        arguments: args.collect(),
-        arguments_matches: None,
-    })
-}
-
 pub struct Argv {
     arguments: Vec<String>,
     arguments_matches: Option<ArgMatches>,
+}
+
+impl Argv {
+    pub(crate) fn new() -> Self {
+        let args = env::args();
+
+        Argv {
+            arguments: args.collect(),
+            arguments_matches: None,
+        }
+    }
 }
 
 impl Input for Argv {

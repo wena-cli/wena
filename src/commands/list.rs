@@ -1,32 +1,42 @@
-use crate::commands::*;
+use colored::*;
 
-pub fn new<TInput: Input, TOutput: Output>() -> Command<TInput, TOutput> {
-    crate::commands::new::<TInput, TOutput>("list")
-        .description("Displays the application commands")
-        .handler(|app| {
-            let name = app.name.clone().bold().white();
-            let version = app.version.clone().green().bold();
+use crate::commands::Command;
+use crate::input::Input;
+use crate::output::Output;
 
-            app.output.writeln("");
-            app.output.writeln(&format!("  {} : {}", name, version));
+pub struct ListCommandFactory {
+    // ..
+}
 
-            let executable = std::env::current_exe().unwrap();
-            let binary = executable.file_name().unwrap().to_str().unwrap();
-            let usage = "USAGE:".bold().yellow();
+impl ListCommandFactory {
+    pub fn new<TInput: Input, TOutput: Output>() -> Command<TInput, TOutput> {
+        Command::new("list")
+            .description("Displays the application commands")
+            .handler(|app| {
+                let name = app.name.clone().bold().white();
+                let version = app.version.clone().green().bold();
 
-            app.output.writeln("");
-            app.output.writeln(&format!(
-                "  {} {} <command> [options] [flags]",
-                usage, binary
-            ));
+                app.output.writeln("");
+                app.output.writeln(&format!("  {} : {}", name, version));
 
-            for subcommand in &app.commands {
-                let name = subcommand.name.clone().bold().white();
-                // let description = subcommand.description.clone().white();
+                let executable = std::env::current_exe().unwrap();
+                let binary = executable.file_name().unwrap().to_str().unwrap();
+                let usage = "USAGE:".bold().yellow();
 
-                app.output.writeln(&format!("         wena {}", name));
-            }
+                app.output.writeln("");
+                app.output.writeln(&format!(
+                    "  {} {} <command> [options] [flags]",
+                    usage, binary
+                ));
 
-            app.output.writeln("");
-        })
+                for subcommand in &app.commands {
+                    let name = subcommand.name.clone().bold().white();
+                    // let description = subcommand.description.clone().white();
+
+                    app.output.writeln(&format!("         wena {}", name));
+                }
+
+                app.output.writeln("");
+            })
+    }
 }

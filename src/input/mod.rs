@@ -1,8 +1,11 @@
-use clap::ArgMatches;
+mod argv;
+mod inline;
+mod null;
 
-pub mod argv;
-pub mod inline;
-pub mod null;
+pub use argv::Argv;
+use clap::ArgMatches;
+pub use inline::Inline;
+pub use null::Null;
 
 pub trait Input<TInput: ?Sized = Self> {
     fn argument(&self, string: &str) -> &str;
