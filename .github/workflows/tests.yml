@@ -34,7 +34,3 @@ jobs:
       run: rustup component add clippy
     - name: Run linter (clippy)
       run: cargo clippy -- -D warnings
-    - name: Install clippy
-      run: rustup component add rustfmt --toolchain nightly
-    - name: Run linter (rustfmt)
-      run: cargo fmt
