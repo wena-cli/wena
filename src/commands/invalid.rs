@@ -8,7 +8,7 @@ pub struct InvalidCommandFactory {
 }
 
 impl InvalidCommandFactory {
-    pub fn new<TInput: Input, TOutput: Output>() -> Command<TInput, TOutput> {
+    pub fn make<TInput: Input, TOutput: Output>() -> Command<TInput, TOutput> {
         Command::new("invalid")
             .description("Displays an invalid command")
             .handler(|app| {

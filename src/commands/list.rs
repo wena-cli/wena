@@ -9,7 +9,7 @@ pub struct ListCommandFactory {
 }
 
 impl ListCommandFactory {
-    pub fn new<TInput: Input, TOutput: Output>() -> Command<TInput, TOutput> {
+    pub fn make<TInput: Input, TOutput: Output>() -> Command<TInput, TOutput> {
         Command::new("list")
             .description("Displays the application commands")
             .handler(|app| {

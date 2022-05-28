@@ -2,6 +2,7 @@ use wena::input::Inline;
 use wena::output::Buffer;
 use wena::{Application, ApplicationOptions, Command};
 
+#[allow(dead_code)]
 pub fn app(
     input: Vec<String>,
     commands: Vec<Command<Inline, Buffer>>,
@@ -11,7 +12,7 @@ pub fn app(
         version: "0.0.1",
         commands,
         input: Box::new(Inline::new("my-application".to_string(), input)),
-        output: Box::new(Buffer::new()),
+        output: Box::new(Buffer::default()),
     });
 
     app.run();

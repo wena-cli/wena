@@ -8,10 +8,13 @@ pub struct Buffer {
 
 impl Buffer {
     #[allow(dead_code)]
-    pub fn new() -> Self {
-        Buffer {
-            contents: String::from(""),
-        }
+    pub fn new(contents: String) -> Self {
+        Buffer { contents }
+    }
+
+    #[allow(dead_code)]
+    pub fn default() -> Self {
+        Self::new(String::from(""))
     }
 }
 

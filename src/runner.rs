@@ -22,9 +22,7 @@ pub fn run<TInput: Input, TOutput: Output>(
         | Ok(matches) => {
             let matched_command = matches.subcommand();
 
-            if matched_command.is_some() {
-                let (name, mached_command_matches) = matched_command.unwrap();
-
+            if let Some((name, mached_command_matches)) = matched_command {
                 application.input = application
                     .input
                     .with_arguments_matches(mached_command_matches.clone());
@@ -48,13 +46,13 @@ pub fn run<TInput: Input, TOutput: Output>(
 
                 (subcommand.handler)(application);
             } else {
-                (crate::commands::ListCommandFactory::new().handler)(
+                (crate::commands::ListCommandFactory::make().handler)(
                     application,
                 );
             }
         }
         | Err(_) => {
-            (crate::commands::InvalidCommandFactory::new().handler)(
+            (crate::commands::InvalidCommandFactory::make().handler)(
                 application,
             );
         }

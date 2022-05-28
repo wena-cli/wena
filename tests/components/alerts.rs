@@ -3,7 +3,7 @@ use wena::*;
 
 #[test]
 fn test_error() {
-    let mut output = Buffer::new();
+    let mut output = Buffer::default();
 
     output.writeln(Alert::error("test"));
 
@@ -12,7 +12,7 @@ fn test_error() {
 
 #[test]
 fn test_info() {
-    let mut output = Buffer::new();
+    let mut output = Buffer::default();
 
     output.writeln(Alert::info("test"));
 
@@ -21,7 +21,7 @@ fn test_info() {
 
 #[test]
 fn test_warn() {
-    let mut output = Buffer::new();
+    let mut output = Buffer::default();
 
     output.writeln(Alert::warn("test"));
 
