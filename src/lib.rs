@@ -3,14 +3,16 @@ pub mod output;
 
 pub use application::{Application, ApplicationOptions};
 pub use commands::Command;
+pub use input::Input;
+pub use output::Output;
 
 mod application;
 mod commands;
 mod runner;
 
 use clap::Arg;
-use input::{Argv, Input};
-use output::{Console, Output};
+use input::Argv;
+use output::Console;
 
 pub fn app(name: &str) -> Application<Argv, Console> {
     Application::new({

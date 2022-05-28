@@ -1,5 +1,4 @@
-use wena::input::Input;
-use wena::output::Output;
+use wena::*;
 
 fn main() {
     wena::app("wena")

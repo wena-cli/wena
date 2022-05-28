@@ -39,7 +39,7 @@ wena = "0.0.1"
 After, modify your `src/main.rs` file, and create your CLI application:
 
 ```rs
-use wena;
+use wena::*;
 
 fn main() {
     wena::app("your-app-name")

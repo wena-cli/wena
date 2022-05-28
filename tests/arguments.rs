@@ -2,8 +2,7 @@ mod assertions;
 mod fixtures;
 
 use assertions::*;
-use wena::input::Input;
-use wena::output::Output;
+use wena::*;
 
 #[test]
 fn it_reads_arguments() {
