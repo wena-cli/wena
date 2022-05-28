@@ -1,9 +1,11 @@
 [package]
+name = "wena"
+version = "0.0.1"
 authors = ["Nuno Maduro <enunomaduro@gmail.com>"]
 edition = "2021"
-name = "wena"
 license = "MIT"
-version = "0.0.1"
+description = "Wena is a micro-framework that provides an elegant starting point for your console application."
+readme = "README.md"
 
 [dependencies]
 clap = { version = "3.1.6", features = ["derive"] }
