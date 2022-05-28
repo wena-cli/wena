@@ -1,0 +1,40 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  integration_tests:
+    runs-on: ubuntu-latest
+    name: tests
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: cargo build --verbose
+    - name: Run tests
+      run: cargo test --verbose
+    - name: Cargo check
+      uses: actions-rs/cargo@v1
+      with:
+        command: check
+        args: --workspace --all-targets --all
+
+  linter:
+    name: clippy-check
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install clippy
+      run: rustup component add clippy
+    - name: Run linter (clippy)
+      run: cargo clippy -- -D warnings
+    - name: Install clippy
+      run: rustup component add rustfmt --toolchain nightly
+    - name: Run linter (rustfmt)
+      run: cargo fmt
