@@ -16,10 +16,10 @@ use clap::Arg;
 use input::Argv;
 use output::Console;
 
-pub fn app(name: &str) -> Application<Argv, Console> {
+pub fn app(name: impl Into<String>) -> Application<Argv, Console> {
     Application::new({
         ApplicationOptions {
-            name,
+            name: name.into().as_str(),
             version: "1.0.0",
             commands: vec![],
             input: Box::new(Argv::new()),

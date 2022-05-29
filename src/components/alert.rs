@@ -8,10 +8,10 @@ pub struct Alert {
 }
 
 impl Alert {
-    pub fn error(description: &str) -> String {
+    pub fn error(description: impl Into<String>) -> String {
         let alert = Alert {
             bg: Color::Red,
-            description: description.to_string(),
+            description: description.into(),
             r#type: "ERROR".to_string(),
             fg: Color::White,
         };
@@ -19,10 +19,10 @@ impl Alert {
         alert.to_string()
     }
 
-    pub fn info(description: &str) -> String {
+    pub fn info(description: impl Into<String>) -> String {
         let alert = Alert {
             bg: Color::Blue,
-            description: description.to_string(),
+            description: description.into(),
             r#type: "INFO".to_string(),
             fg: Color::White,
         };
@@ -30,10 +30,10 @@ impl Alert {
         alert.to_string()
     }
 
-    pub fn warn(description: &str) -> String {
+    pub fn warn(description: impl Into<String>) -> String {
         let alert = Alert {
             bg: Color::Yellow,
-            description: description.to_string(),
+            description: description.into(),
             r#type: "WARN".to_string(),
             fg: Color::White,
         };
