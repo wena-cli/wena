@@ -1,37 +1,21 @@
 use terminal_size::terminal_size;
 
-pub struct Terminal
-{
+pub struct Terminal {
     width: usize,
-    height: usize,
 }
 
-impl Terminal
-{
-    pub fn new(width: usize, height: usize) -> Self
-    {
-        Self
-        {
-            width,
-            height,
-        }
+impl Terminal {
+    pub fn new(width: usize) -> Self {
+        Self { width }
     }
 
-    pub fn default() -> Self
-    {
-        let (width, height) = terminal_size().unwrap();
+    pub fn default() -> Self {
+        let (width, _) = terminal_size().unwrap();
 
-        Self::new(width.0 as usize, height.0 as usize)
+        Self::new(width.0 as usize)
     }
 
-
-    pub fn width(&self) -> usize
-    {
+    pub fn width(&self) -> usize {
         self.width
-    }
-
-    pub fn height(&self) -> usize
-    {
-        self.height
     }
 }

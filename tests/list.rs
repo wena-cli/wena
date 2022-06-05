@@ -1,11 +1,20 @@
-mod assertions;
-mod fixtures;
-
-use assertions::*;
+use wena::Command;
+use wena::BufferOutput;
+use wena::InlineInput;
+use wena::Application;
 
 #[test]
 fn it_runs() {
-    let app = fixtures::app(vec![], vec![]);
+    let arguments: [String; 0] = [];
 
-    assert_output(app, "my-application : 0.0.1");
+    let mut app = Application::new("my-app")
+        .io(InlineInput::new("my-app", arguments), BufferOutput::default());
+
+    app.commands([
+        Command::<InlineInput, BufferOutput>::new("add").description("Add a new todo"),
+    ]).run();
+
+    assert!(app.output.contents.contains("add"));
+    assert!(app.output.contents.contains("Add a new todo"));
+
 }

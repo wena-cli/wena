@@ -19,7 +19,7 @@ pub fn run<TInput: Input, TOutput: Output>(
     }
 
     application.input.find_matches(command);
-    
+
     match application.input.matches() {
         | Ok(matches) => {
             let matched_command = matches.subcommand();
@@ -32,11 +32,13 @@ pub fn run<TInput: Input, TOutput: Output>(
                     .unwrap();
 
                 for argument in &subcommand.definition {
-                    if !mached_command_matches.is_present(argument.get_id()) && argument.is_required_set() {
+                    if !mached_command_matches.is_present(argument.get_id())
+                        && argument.is_required_set()
+                    {
                         application.output.writeln(Alert::error(&format!(
                             "Argument {} is required.",
                             argument.get_id().bold().white().italic(),
-                        )));    
+                        )));
                     }
                 }
 

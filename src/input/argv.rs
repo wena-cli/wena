@@ -1,35 +1,34 @@
-use clap::Command;
 use std::env;
 
-use clap::{ArgMatches, Error, Result};
+use clap::{ArgMatches, Command, Error, Result};
 
 use crate::input::Input;
 
-pub struct Argv {
+pub struct ArgvInput {
     arguments: Vec<String>,
-    matches: Result<ArgMatches, Error>
+    matches: Result<ArgMatches, Error>,
 }
 
-impl Argv {
+impl ArgvInput {
     pub(crate) fn new() -> Self {
         let args = env::args();
 
-        Argv {
+        ArgvInput {
             arguments: args.collect(),
-            matches: Ok(ArgMatches::default())
+            matches: Ok(ArgMatches::default()),
         }
     }
 }
 
-impl Input for Argv {
+impl Input for ArgvInput {
     fn find_matches(&mut self, command: Command) {
-        let matches = command.try_get_matches_from(self.arguments.clone().into_iter());
+        let matches =
+            command.try_get_matches_from(self.arguments.clone().into_iter());
 
         self.matches = matches;
     }
 
-    fn matches(&self) -> Result<&ArgMatches, &Error>
-    {
+    fn matches(&self) -> Result<&ArgMatches, &Error> {
         self.matches.as_ref()
     }
 }

@@ -1,23 +1,26 @@
-mod assertions;
-mod fixtures;
-
-use assertions::*;
+use wena::Argument;
+use wena::Output;
+use wena::Command;
+use wena::BufferOutput;
+use wena::InlineInput;
+use wena::Application;
+use wena::Input;
 
 #[test]
-fn it_reads_arguments() {
-    let app = fixtures::app(
-        vec!["hello".to_string(), "nuno".to_string()],
-        vec![
-            wena::command("hello")
-                .description("Displays hello")
-                .argument("name", |argument| argument.required(true))
-                .handler(|app| {
-                    let name = app.input.argument("name");
+fn it_provides_arguments_on_input() {
+    let mut app = Application::new("my-app")
+        .io(InlineInput::new("my-app", ["add", "my-todo-item"]), BufferOutput::default());
 
-                    app.output.writeln(format!("Hello, {}!", name));
-                }),
-        ],
-    );
+    app.commands([
+        Command::<InlineInput, BufferOutput>::new("add")
+            .description("Add a new todo")
+            .definition([
+                Argument::new("todo").required(true),
+            ])
+            .handler(|app| {
+                app.output.writeln(app.input.argument("todo").unwrap());
+            }),
+    ]).run();
 
-    assert_output(app, "Hello, nuno!");
+    assert!(app.output.contents.contains("my-todo-item"));
 }

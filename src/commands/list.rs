@@ -36,19 +36,33 @@ impl ListCommandFactory {
                     let mut line = format!("         {}", name);
 
                     subcommand.definition.iter().for_each(|argument| {
-                        let name = argument.get_id().clone();
-                        line.push_str(&format!(" [{}]", name)
-                            .color(TrueColor { r: 100, g: 100, b: 100 })
-                        );
+                        let name = argument.get_id();
+                        line.push_str(&format!(" [{}]", name).color(
+                            TrueColor {
+                                r: 100,
+                                g: 100,
+                                b: 100,
+                            },
+                        ));
                     });
 
                     line.push(' ');
 
-                    line.push_str(format!(
-                        "{}",
-                        ".".repeat(terminal.width() - line.len() + 1 - description.len())
-                            .color(TrueColor { r: 100, g: 100, b: 100 })
-                    ).as_str());
+                    line.push_str(
+                        format!(
+                            "{}",
+                            ".".repeat(
+                                terminal.width() - line.len() + 1
+                                    - description.len()
+                            )
+                            .color(TrueColor {
+                                r: 100,
+                                g: 100,
+                                b: 100
+                            })
+                        )
+                        .as_str(),
+                    );
 
                     line.push(' ');
                     line.push_str(description.as_str());

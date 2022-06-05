@@ -2,14 +2,14 @@ use regex::Regex;
 
 use crate::output::Output;
 
-pub struct Buffer {
+pub struct BufferOutput {
     pub contents: String,
 }
 
-impl Buffer {
+impl BufferOutput {
     #[allow(dead_code)]
     pub fn new(contents: String) -> Self {
-        Buffer { contents }
+        BufferOutput { contents }
     }
 
     #[allow(dead_code)]
@@ -18,7 +18,7 @@ impl Buffer {
     }
 }
 
-impl Output for Buffer {
+impl Output for BufferOutput {
     fn write(&mut self, string: impl Into<String>) {
         let string = string.into();
 

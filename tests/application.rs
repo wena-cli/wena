@@ -1,46 +1,49 @@
-mod assertions;
-mod fixtures;
-
-use assertions::*;
-use wena::*;
+use wena::{Application, BufferOutput, Command, InlineInput, Output};
 
 #[test]
 fn it_has_a_name() {
-    let app = fixtures::app(vec![], vec![]);
+    let app = Application::new("my-app");
 
-    assert_output(app, "my-application");
+    assert_eq!("my-app", app.name);
 }
 
 #[test]
-fn it_has_a_version() {
-    let app = fixtures::app(vec![], vec![]);
+fn it_has_a_default_version() {
+    let version = Application::new("my-app").version;
 
-    assert_eq!(app.version, "0.0.1");
+    assert_eq!("1.0.0", version);
+}
+
+#[test]
+fn it_has_version() {
+    let version = Application::new("my-app")
+        .version("1.0.1")
+        .version
+        .to_string();
+
+    assert_eq!("1.0.1", version);
 }
 
 #[test]
 fn it_has_no_commands_by_default() {
-    let app = fixtures::app(vec![], vec![]);
+    let app = Application::new("my-app");
 
     assert_eq!(app.commands.len(), 0);
 }
 
 #[test]
 fn it_can_have_commands() {
-    let app =
-        fixtures::app(vec![], vec![wena::command("hello").handler(|_| {})]);
+    let mut app = Application::new("my-app")
+        .io(InlineInput::new("todo", ["add"]), BufferOutput::default());
 
-    assert_eq!(1, app.commands.len());
-}
+    app.commands([Command::<InlineInput, BufferOutput>::new("add").handler(
+        |app| {
+            app.output.writeln("Hello, world!");
+        },
+    )])
+    .run();
 
-#[test]
-fn it_run_commands() {
-    let app = fixtures::app(
-        vec!["hello".to_string()],
-        vec![command("hello").handler(|app| {
-            app.output.writeln("Hello, world!".to_string());
-        })],
-    );
+    dbg!(app.output.contents.clone());
 
-    assert_eq!(app.output.contents, "Hello, world!\n");
+    assert!(app.output.contents.contains("Hello, world!"));
 }

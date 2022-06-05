@@ -1,18 +1,18 @@
 use crate::output::Output;
 
-pub struct Console {
+pub struct ConsoleOutput {
     // ..
 }
 
-impl Console {
+impl ConsoleOutput {
     pub(crate) fn new() -> Self {
-        Console {
+        ConsoleOutput {
             // ..
         }
     }
 }
 
-impl Output for Console {
+impl Output for ConsoleOutput {
     fn write(&mut self, string: impl Into<String>) {
         print!("{}", string.into());
     }

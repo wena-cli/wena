@@ -27,11 +27,7 @@ impl<TInput: Input + ?Sized, TOutput: Output + ?Sized>
             name: name.into(),
         }
     }
-}
 
-impl<TInput: Input + ?Sized, TOutput: Output + ?Sized>
-    Command<TInput, TOutput>
-{
     pub fn definition(
         mut self,
         arguments: impl IntoIterator<Item = Arg<'static>>,

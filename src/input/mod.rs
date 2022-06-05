@@ -1,11 +1,13 @@
+mod argument;
 mod argv;
 mod inline;
 mod null;
 
-pub use argv::Argv;
-use clap::{ArgMatches, Error, Result, Command};
-pub use inline::Inline;
-pub use null::Null;
+pub use argument::Argument;
+pub use argv::ArgvInput;
+use clap::{ArgMatches, Command, Error, Result};
+pub use inline::InlineInput;
+pub use null::NullInput;
 
 pub trait Input {
     fn argument(&self, name: &str) -> Option<&str> {

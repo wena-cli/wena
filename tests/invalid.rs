@@ -1,17 +1,19 @@
-mod assertions;
-mod fixtures;
-
-use assertions::*;
-use wena::output::Output;
+use wena::Output;
+use wena::Command;
+use wena::BufferOutput;
+use wena::InlineInput;
+use wena::Application;
 
 #[test]
 fn it_runs() {
-    let app = fixtures::app(
-        vec!["invalid command".to_string()],
-        vec![wena::command("hello").handler(|app| {
-            app.output.writeln("Hello, world!".to_string());
-        })],
-    );
+    let mut app = Application::new("my-app")
+        .io(InlineInput::new("my-app", ["add"]), BufferOutput::default());
 
-    assert_output(app, "Command not found.");
+    app.commands([
+        Command::<InlineInput, BufferOutput>::new("add").handler(|app| {
+            app.output.writeln("Hello, world!");
+        }),
+    ]).run();
+
+    assert!(app.output.contents.contains("Hello, world!"));
 }

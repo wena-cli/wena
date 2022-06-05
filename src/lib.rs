@@ -1,44 +1,19 @@
-pub mod components;
-pub mod commands;
-pub mod input;
-pub mod output;
-pub mod support;
+pub type Argument = input::Argument;
+pub type Command<TInput = ArgvInput, TOutput = ConsoleOutput> =
+    commands::Command<TInput, TOutput>;
 
-pub use application::{Application, ApplicationOptions};
+pub use application::Application;
 pub use components::Alert;
-pub use input::Input;
-pub use output::Output;
-
-pub type Command = commands::Command<Argv, Console>;
+pub use input::{InlineInput, Input};
+pub use output::{BufferOutput, Output};
 
 mod application;
+mod commands;
+mod components;
+mod input;
+mod output;
 mod runner;
+mod support;
 
-use clap::Arg;
-use input::Argv;
-use output::Console;
-
-pub fn app(name: impl Into<String>) -> Application<Argv, Console> {
-    Application::new({
-        ApplicationOptions {
-            name: name.into().as_str(),
-            version: "1.0.0",
-            commands: vec![],
-            input: Box::new(Argv::new()),
-            output: Box::new(Console::new()),
-        }
-    })
-}
-
-pub fn argument(name: &str) -> clap::Arg {
-    Arg::new(name).takes_value(true).required(true)
-}
-
-pub fn option(name: &str) -> clap::Arg {
-    Arg::new(name).takes_value(false).required(false)
-}
-
-pub fn command(name: &str) -> Command {
-    Command::new(name)
-}
-
+use input::ArgvInput;
+use output::ConsoleOutput;

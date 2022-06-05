@@ -17,7 +17,9 @@ impl InvalidCommandFactory {
                         // ..
                     }
                     | Err(error) => {
-                        app.output.writeln(Alert::error(error.kind().to_string().as_str()));
+                        app.output.writeln(Alert::error(
+                            error.kind().to_string().as_str(),
+                        ));
                     }
                 }
             })
