@@ -1,12 +1,13 @@
+use clap::Command;
 use std::env;
 
-use clap::ArgMatches;
+use clap::{ArgMatches, Error, Result};
 
 use crate::input::Input;
 
 pub struct Argv {
     arguments: Vec<String>,
-    arguments_matches: Option<ArgMatches>,
+    matches: Result<ArgMatches, Error>
 }
 
 impl Argv {
@@ -15,30 +16,20 @@ impl Argv {
 
         Argv {
             arguments: args.collect(),
-            arguments_matches: None,
+            matches: Ok(ArgMatches::default())
         }
     }
 }
 
 impl Input for Argv {
-    fn argument(&self, name: &str) -> &str {
-        if let Some(arguments_matches) = &self.arguments_matches {
-            if let Some(value) = arguments_matches.value_of(name) {
-                return value;
-            }
-        }
+    fn find_matches(&mut self, command: Command) {
+        let matches = command.try_get_matches_from(self.arguments.clone().into_iter());
 
-        panic!("Argument not found: {}.", name);
+        self.matches = matches;
     }
 
-    fn with_arguments_matches(&self, matches: ArgMatches) -> Box<Argv> {
-        Box::new(Argv {
-            arguments: self.arguments.clone(),
-            arguments_matches: Some(matches),
-        })
-    }
-
-    fn to_iter(&self) -> Box<dyn Iterator<Item = String>> {
-        Box::new(self.arguments.clone().into_iter())
+    fn matches(&self) -> Result<&ArgMatches, &Error>
+    {
+        self.matches.as_ref()
     }
 }

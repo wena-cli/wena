@@ -1,5 +1,5 @@
 use clap::Command;
-use colored::*;
+use colored::Colorize;
 
 use crate::application::Application;
 use crate::components::Alert;
@@ -14,33 +14,29 @@ pub fn run<TInput: Input, TOutput: Output>(
     for subcommand in &application.commands {
         command = command.subcommand(
             Command::new(subcommand.name.to_string())
-                .args(subcommand.arguments.clone()),
+                .args(subcommand.definition.clone()),
         );
     }
 
-    match command.try_get_matches_from(application.input.to_iter()) {
+    application.input.find_matches(command);
+    
+    match application.input.matches() {
         | Ok(matches) => {
             let matched_command = matches.subcommand();
 
             if let Some((name, mached_command_matches)) = matched_command {
-                application.input = application
-                    .input
-                    .with_arguments_matches(mached_command_matches.clone());
-
                 let subcommand = application
                     .commands
                     .iter()
                     .find(|subcommand| subcommand.name == name)
                     .unwrap();
 
-                for argument in &subcommand.arguments {
-                    if !mached_command_matches.is_present(argument.get_id()) {
+                for argument in &subcommand.definition {
+                    if !mached_command_matches.is_present(argument.get_id()) && argument.is_required_set() {
                         application.output.writeln(Alert::error(&format!(
                             "Argument {} is required.",
                             argument.get_id().bold().white().italic(),
-                        )));
-
-                        return application;
+                        )));    
                     }
                 }
 

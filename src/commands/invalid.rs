@@ -12,7 +12,14 @@ impl InvalidCommandFactory {
         Command::new("invalid")
             .description("Displays an invalid command")
             .handler(|app| {
-                app.output.writeln(Alert::error("Command not found."));
+                match app.input.matches() {
+                    | Ok(_) => {
+                        // ..
+                    }
+                    | Err(error) => {
+                        app.output.writeln(Alert::error(error.kind().to_string().as_str()));
+                    }
+                }
             })
     }
 }

@@ -45,6 +45,17 @@ impl<TInput: Input, TOutput: Output> Application<TInput, TOutput> {
         self
     }
 
+    pub fn commands(
+        &mut self,
+        commands: impl IntoIterator<Item = Command<TInput, TOutput>>,
+    ) -> &mut Application<TInput, TOutput> {
+        for command in commands {
+            self.commands.push(command);
+        }
+
+        self
+    }
+
     pub fn version(
         &mut self,
         version: &str,

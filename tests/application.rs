@@ -2,7 +2,7 @@ mod assertions;
 mod fixtures;
 
 use assertions::*;
-use wena::output::Output;
+use wena::*;
 
 #[test]
 fn it_has_a_name() {
@@ -37,7 +37,7 @@ fn it_can_have_commands() {
 fn it_run_commands() {
     let app = fixtures::app(
         vec!["hello".to_string()],
-        vec![wena::command("hello").handler(|app| {
+        vec![command("hello").handler(|app| {
             app.output.writeln("Hello, world!".to_string());
         })],
     );

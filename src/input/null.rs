@@ -1,32 +1,29 @@
-use clap::ArgMatches;
+use clap::{ArgMatches, Error, Result, Command};
 
 use crate::input::Input;
 
 pub struct Null {
-    // ..
+    matches: Result<ArgMatches, Error>
 }
 
 impl Null {
     #[allow(dead_code)]
     pub(crate) fn new() -> Self {
         Null {
-            // ..
+            matches: Ok(ArgMatches::default())
         }
     }
 }
 
 impl Input for Null {
-    fn argument(&self, name: &str) -> &str {
-        panic!("Argument not found: {}.", name);
+    fn find_matches(&mut self, command: Command) {
+        let matches = command.try_get_matches_from(Vec::<String>::new().iter());
+
+        self.matches = matches;
     }
 
-    fn with_arguments_matches(&self, _matches: ArgMatches) -> Box<Null> {
-        Box::new(Null {
-            // ..
-        })
-    }
-
-    fn to_iter(&self) -> Box<dyn Iterator<Item = String>> {
-        Box::new(std::iter::empty())
+    fn matches(&self) -> Result<&ArgMatches, &Error>
+    {
+        self.matches.as_ref()
     }
 }

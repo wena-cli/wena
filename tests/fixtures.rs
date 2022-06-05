@@ -1,6 +1,7 @@
+use wena::commands::Command;
 use wena::input::Inline;
 use wena::output::Buffer;
-use wena::{Application, ApplicationOptions, Command};
+use wena::{Application, ApplicationOptions};
 
 #[allow(dead_code)]
 pub fn app(

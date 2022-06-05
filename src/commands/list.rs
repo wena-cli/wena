@@ -1,8 +1,10 @@
+use colored::Color::TrueColor;
 use colored::*;
 
 use crate::commands::Command;
 use crate::input::Input;
 use crate::output::Output;
+use crate::support::terminal::Terminal;
 
 pub struct ListCommandFactory {
     // ..
@@ -12,7 +14,6 @@ impl ListCommandFactory {
     pub fn make<TInput: Input, TOutput: Output>() -> Command<TInput, TOutput> {
         Command::new("list")
             .description("Displays the application commands")
-            .argument("version", |argument| argument.takes_value(false).short('v'))
             .handler(|app| {
                 let executable = std::env::current_exe().unwrap();
                 let binary = executable.file_name().unwrap().to_str().unwrap();
@@ -24,17 +25,35 @@ impl ListCommandFactory {
                     usage, binary
                 ));
 
+                app.output.new_line();
+
+                let terminal = Terminal::default();
+
                 for subcommand in &app.commands {
                     let name = subcommand.name.clone().bold().white();
-                    // let description = subcommand.description.clone().white();
+                    let description = subcommand.description.clone();
 
-                    app.output.write(format!("         {} {}", binary, name));
-                    subcommand.arguments.iter().for_each(|argument| {
+                    let mut line = format!("         {}", name);
+
+                    subcommand.definition.iter().for_each(|argument| {
                         let name = argument.get_id().clone();
-                        // let description = argument.long().clone().white();
-
-                        app.output.write(format!(" [{}]", name));
+                        line.push_str(&format!(" [{}]", name)
+                            .color(TrueColor { r: 100, g: 100, b: 100 })
+                        );
                     });
+
+                    line.push(' ');
+
+                    line.push_str(format!(
+                        "{}",
+                        ".".repeat(terminal.width() - line.len() + 1 - description.len())
+                            .color(TrueColor { r: 100, g: 100, b: 100 })
+                    ).as_str());
+
+                    line.push(' ');
+                    line.push_str(description.as_str());
+
+                    app.output.writeln(line);
                 }
 
                 app.output.new_line();

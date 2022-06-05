@@ -3,14 +3,22 @@ mod inline;
 mod null;
 
 pub use argv::Argv;
-use clap::ArgMatches;
+use clap::{ArgMatches, Error, Result, Command};
 pub use inline::Inline;
 pub use null::Null;
 
-pub trait Input<TInput: ?Sized = Self> {
-    fn argument(&self, string: &str) -> &str;
+pub trait Input {
+    fn argument(&self, name: &str) -> Option<&str> {
+        if let Ok(matches) = &self.matches() {
+            if let Some((_, sub_matches)) = matches.subcommand() {
+                return sub_matches.value_of(name);
+            }
+        }
 
-    fn to_iter(&self) -> Box<dyn Iterator<Item = String>>;
+        None
+    }
 
-    fn with_arguments_matches(&self, arguments: ArgMatches) -> Box<TInput>;
+    fn find_matches(&mut self, command: Command);
+
+    fn matches(&self) -> Result<&ArgMatches, &Error>;
 }

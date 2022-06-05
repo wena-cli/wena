@@ -11,7 +11,7 @@ use crate::output::Output;
 
 pub struct Command<TInput: Input + ?Sized, TOutput: Output + ?Sized> {
     pub name: String,
-    pub arguments: Vec<Arg<'static>>,
+    pub definition: Vec<Arg<'static>>,
     pub description: String,
     pub handler: Handler<TInput, TOutput>,
 }
@@ -19,12 +19,12 @@ pub struct Command<TInput: Input + ?Sized, TOutput: Output + ?Sized> {
 impl<TInput: Input + ?Sized, TOutput: Output + ?Sized>
     Command<TInput, TOutput>
 {
-    pub fn new(name: &str) -> Command<TInput, TOutput> {
+    pub fn new(name: impl Into<String>) -> Command<TInput, TOutput> {
         Command {
-            arguments: vec![],
+            definition: vec![],
             description: String::from(""),
             handler: |_| {},
-            name: name.to_string(),
+            name: name.into(),
         }
     }
 }
@@ -32,14 +32,13 @@ impl<TInput: Input + ?Sized, TOutput: Output + ?Sized>
 impl<TInput: Input + ?Sized, TOutput: Output + ?Sized>
     Command<TInput, TOutput>
 {
-    pub fn argument(
+    pub fn definition(
         mut self,
-        name: &'static str,
-        resolver: impl Fn(Arg) -> Arg,
-    ) -> Command<TInput, TOutput> {
-        let argument = Arg::new(name);
-
-        self.arguments.push(resolver(argument));
+        arguments: impl IntoIterator<Item = Arg<'static>>,
+    ) -> Self {
+        for argument in arguments {
+            self.definition.push(argument);
+        }
 
         self
     }

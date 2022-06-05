@@ -2,7 +2,6 @@ mod assertions;
 mod fixtures;
 
 use assertions::*;
-use wena::*;
 
 #[test]
 fn it_reads_arguments() {
