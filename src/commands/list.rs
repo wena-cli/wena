@@ -72,6 +72,8 @@ impl ListCommandFactory {
                 }
 
                 app.output.new_line();
+
+                Ok(0)
             })
     }
 }

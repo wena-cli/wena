@@ -8,7 +8,7 @@ use crate::output::Output;
 
 pub fn run<TInput: Input, TOutput: Output>(
     application: &mut Application<TInput, TOutput>,
-) -> &Application<TInput, TOutput> {
+) -> Result<i32, &'static str> {
     let mut command = Command::new(&application.name);
 
     for subcommand in &application.commands {
@@ -20,7 +20,7 @@ pub fn run<TInput: Input, TOutput: Output>(
 
     application.input.find_matches(command);
 
-    match application.input.matches() {
+    let result = match application.input.matches() {
         | Ok(matches) => {
             let matched_command = matches.subcommand();
 
@@ -42,19 +42,17 @@ pub fn run<TInput: Input, TOutput: Output>(
                     }
                 }
 
-                (subcommand.handler)(application);
+                (subcommand.handler)(application)
             } else {
                 (crate::commands::ListCommandFactory::make().handler)(
                     application,
-                );
+                )
             }
         }
-        | Err(_) => {
-            (crate::commands::InvalidCommandFactory::make().handler)(
-                application,
-            );
-        }
-    }
+        | Err(_) => (crate::commands::InvalidCommandFactory::make().handler)(
+            application,
+        ),
+    };
 
-    application
+    result
 }

@@ -1,21 +1,20 @@
-use wena::Output;
-use wena::Command;
-use wena::BufferOutput;
-use wena::InlineInput;
-use wena::Application;
+use wena::{Application, BufferOutput, Command, InlineInput, Output};
 
 #[test]
 fn it_runs() {
     let mut app = Application::new("my-app")
         .io(InlineInput::new("my-app", ["add"]), BufferOutput::default());
 
-    app.commands([
-        Command::new("add")
+    let result = app
+        .commands([Command::new("add")
             .io::<InlineInput, BufferOutput>()
             .handler(|app| {
                 app.output.writeln("Hello, world!");
-            }),
-    ]).run();
 
+                Ok(1)
+            })])
+        .do_run();
+
+    assert_eq!(1, result.unwrap());
     assert!(app.output.contents.contains("Hello, world!"));
 }

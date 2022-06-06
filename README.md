@@ -56,6 +56,8 @@ fn main() {
                 let second = app.input.argument::<i32>("second").unwrap();
 
                 app.output.writeln(format!("Total: {}", first + second));
+
+                Ok(0)
             })])
         .run();
 }
@@ -112,6 +114,8 @@ let app = Application::new("application-name")
     .commands([
         Command::new("command-name").handler(|app| {
             // Command code...
+
+            Ok(0)
         })
     ]);
 ```
@@ -137,6 +141,8 @@ use wena::Command
 let command = Command::new("command-name")
     .handler(|app| {
         // Command code...
+
+        Ok(0)
     });
 ```
 
@@ -149,6 +155,8 @@ let command = Command::new("command-name")
     .handler(|app| {
         let input = &app.input;
         let output = &app.output;
+
+        Ok(0)
     });
 ```
 
@@ -175,6 +183,8 @@ let command = Command::new("command-name")
         Argument::new("argument-name").required(true),
     ]).handler(|app| {
         let value = app.input.argument::<String>("argument-name");
+
+        Ok(0)
     });
 ```
 
@@ -197,6 +207,8 @@ let command = Command::new("command-name")
 
         // Outputs the given message and a new line...
         app.output.writeln("My message");
+
+        Ok(0)
     });
 ```
 
@@ -215,10 +227,11 @@ use wena::{Alert, Command, Output};
 
 let command = Command::new("command-name")
     .handler(|app| {
-        app.output.writeln(Alert::info("This is a info — check it out!"));
+        app.output.writeln(Alert::error("This is a error — check it out!"));
         app.output.writeln(Alert::success("This is a success — check it out!"));
-        app.output.writeln(Alert::danger("This is a danger — check it out!"));
-        app.output.writeln(Alert::warning("This is a warning — check it out!"));
+        app.output.writeln(Alert::warn("This is a warning — check it out!"));
+
+        Ok(0)
     );
 ```
 

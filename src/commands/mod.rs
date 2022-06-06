@@ -22,7 +22,7 @@ impl Command<ArgvInput, ConsoleOutput> {
         Command {
             definition: vec![],
             description: String::from(""),
-            handler: |_| {},
+            handler: |_| Ok(0),
             name: name.into(),
         }
     }
@@ -34,7 +34,7 @@ impl Command<ArgvInput, ConsoleOutput> {
             name: self.name.clone(),
             definition: self.definition.clone(),
             description: self.description.clone(),
-            handler: |_| {},
+            handler: |_| Ok(0),
         }
     }
 }
@@ -65,4 +65,5 @@ impl<TInput: Input + ?Sized, TOutput: Output + ?Sized>
     }
 }
 
-type Handler<TInput, TOutput> = fn(&mut Application<TInput, TOutput>) -> ();
+type Handler<TInput, TOutput> =
+    fn(&mut Application<TInput, TOutput>) -> Result<i32, &'static str>;

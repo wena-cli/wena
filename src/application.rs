@@ -1,7 +1,9 @@
+use std::process::exit;
+
 use crate::commands::Command;
 use crate::input::Input;
 use crate::output::Output;
-use crate::{ArgvInput, ConsoleOutput};
+use crate::{Alert, ArgvInput, ConsoleOutput};
 
 pub struct Application<TInput: Input + ?Sized, TOutput: Output + ?Sized> {
     pub name: String,
@@ -66,7 +68,20 @@ impl<TInput: Input, TOutput: Output> Application<TInput, TOutput> {
         self
     }
 
-    pub fn run(&mut self) -> &Application<TInput, TOutput> {
+    pub fn do_run(&mut self) -> Result<i32, &'static str> {
         crate::runner::run::<TInput, TOutput>(self)
+    }
+
+    pub fn run(&mut self) {
+        match self.do_run() {
+            | Ok(exit_code) => {
+                exit(exit_code);
+            }
+            | Err(error) => {
+                self.output.write(Alert::error(error.to_string()));
+
+                exit(1);
+            }
+        }
     }
 }

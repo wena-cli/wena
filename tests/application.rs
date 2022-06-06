@@ -36,17 +36,16 @@ fn it_can_have_commands() {
     let mut app = Application::new("my-app")
         .io(InlineInput::new("todo", ["add"]), BufferOutput::default());
 
-    app.commands([
-        Command::new("add")
+    let result = app
+        .commands([Command::new("add")
             .io::<InlineInput, BufferOutput>()
-            .handler(
-                |app| {
-                    app.output.writeln("Hello, world!");
-                },
-            )
-        ]).run();
+            .handler(|app| {
+                app.output.writeln("Hello, world!");
 
-    dbg!(app.output.contents.clone());
+                Ok(0)
+            })])
+        .do_run();
 
+    assert_eq!(0, result.unwrap());
     assert!(app.output.contents.contains("Hello, world!"));
 }

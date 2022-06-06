@@ -23,6 +23,8 @@ impl InvalidCommandFactory {
                         ));
                     }
                 }
+
+                Ok(0)
             })
     }
 }

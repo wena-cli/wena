@@ -30,12 +30,12 @@ impl Alert {
         alert.to_string()
     }
 
-    pub fn warn(description: impl Into<String>) -> String {
+    pub fn warning(description: impl Into<String>) -> String {
         let alert = Alert {
             bg: Color::Yellow,
             description: description.into(),
             r#type: "WARN".to_string(),
-            fg: Color::White,
+            fg: Color::Black,
         };
 
         alert.to_string()
