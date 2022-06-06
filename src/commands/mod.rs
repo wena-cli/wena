@@ -28,6 +28,11 @@ impl<TInput: Input + ?Sized, TOutput: Output + ?Sized>
         }
     }
 
+    pub fn description(mut self, description: impl Into<String>) -> Self {
+        self.description = description.into();
+        self
+    }
+
     pub fn definition(
         mut self,
         arguments: impl IntoIterator<Item = Arg<'static>>,
@@ -35,12 +40,6 @@ impl<TInput: Input + ?Sized, TOutput: Output + ?Sized>
         for argument in arguments {
             self.definition.push(argument);
         }
-
-        self
-    }
-
-    pub fn description(mut self, value: &str) -> Self {
-        self.description = value.to_string();
 
         self
     }
