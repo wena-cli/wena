@@ -13,6 +13,7 @@ pub struct ListCommandFactory {
 impl ListCommandFactory {
     pub fn make<TInput: Input, TOutput: Output>() -> Command<TInput, TOutput> {
         Command::new("list")
+            .io::<TInput, TOutput>()
             .description("Displays the application commands")
             .handler(|app| {
                 let executable = std::env::current_exe().unwrap();

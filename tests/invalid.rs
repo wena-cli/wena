@@ -10,9 +10,11 @@ fn it_runs() {
         .io(InlineInput::new("my-app", ["add"]), BufferOutput::default());
 
     app.commands([
-        Command::<InlineInput, BufferOutput>::new("add").handler(|app| {
-            app.output.writeln("Hello, world!");
-        }),
+        Command::new("add")
+            .io::<InlineInput, BufferOutput>()
+            .handler(|app| {
+                app.output.writeln("Hello, world!");
+            }),
     ]).run();
 
     assert!(app.output.contents.contains("Hello, world!"));

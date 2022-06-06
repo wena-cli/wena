@@ -12,13 +12,14 @@ fn it_provides_arguments_on_input() {
         .io(InlineInput::new("my-app", ["add", "my-todo-item"]), BufferOutput::default());
 
     app.commands([
-        Command::<InlineInput, BufferOutput>::new("add")
+        Command::new("add")
+            .io::<InlineInput, BufferOutput>()
             .description("Add a new todo")
             .definition([
                 Argument::new("todo").required(true),
             ])
             .handler(|app| {
-                app.output.writeln(app.input.argument("todo").unwrap());
+                app.output.writeln(app.input.argument::<String>("todo").unwrap());
             }),
     ]).run();
 

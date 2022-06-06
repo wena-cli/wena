@@ -11,7 +11,9 @@ fn it_runs() {
         .io(InlineInput::new("my-app", arguments), BufferOutput::default());
 
     app.commands([
-        Command::<InlineInput, BufferOutput>::new("add").description("Add a new todo"),
+        Command::new("add")
+            .io::<InlineInput, BufferOutput>()
+            .description("Add a new todo"),
     ]).run();
 
     assert!(app.output.contents.contains("add"));

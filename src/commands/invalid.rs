@@ -10,6 +10,7 @@ pub struct InvalidCommandFactory {
 impl InvalidCommandFactory {
     pub fn make<TInput: Input, TOutput: Output>() -> Command<TInput, TOutput> {
         Command::new("invalid")
+            .io::<TInput, TOutput>()
             .description("Displays an invalid command")
             .handler(|app| {
                 match app.input.matches() {

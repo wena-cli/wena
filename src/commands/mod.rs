@@ -8,6 +8,7 @@ pub use list::ListCommandFactory;
 use crate::application::Application;
 use crate::input::Input;
 use crate::output::Output;
+use crate::{ArgvInput, ConsoleOutput};
 
 pub struct Command<TInput: Input + ?Sized, TOutput: Output + ?Sized> {
     pub name: String,
@@ -16,10 +17,8 @@ pub struct Command<TInput: Input + ?Sized, TOutput: Output + ?Sized> {
     pub handler: Handler<TInput, TOutput>,
 }
 
-impl<TInput: Input + ?Sized, TOutput: Output + ?Sized>
-    Command<TInput, TOutput>
-{
-    pub fn new(name: impl Into<String>) -> Command<TInput, TOutput> {
+impl Command<ArgvInput, ConsoleOutput> {
+    pub fn new(name: impl Into<String>) -> Command<ArgvInput, ConsoleOutput> {
         Command {
             definition: vec![],
             description: String::from(""),
@@ -28,6 +27,21 @@ impl<TInput: Input + ?Sized, TOutput: Output + ?Sized>
         }
     }
 
+    pub fn io<TGivenInput: Input, TGivenOutput: Output>(
+        &self,
+    ) -> Command<TGivenInput, TGivenOutput> {
+        Command {
+            name: self.name.clone(),
+            definition: self.definition.clone(),
+            description: self.description.clone(),
+            handler: |_| {},
+        }
+    }
+}
+
+impl<TInput: Input + ?Sized, TOutput: Output + ?Sized>
+    Command<TInput, TOutput>
+{
     pub fn description(mut self, description: impl Into<String>) -> Self {
         self.description = description.into();
         self

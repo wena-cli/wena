@@ -44,19 +44,20 @@ After, modify your `src/main.rs` file, and create your CLI application:
 use wena::*;
 
 fn main() {
-    wena::app("wena")
-        .version("0.0.1")
-        .command("hello", |command| {
-            command
-                .argument("name", |argument| argument)
-                .handler(|app| {
-                    let name = app.input.argument("name");
+    Application::new("calculator")
+        .commands([Command::new("sum")
+            .description("Add two numbers")
+            .definition([
+                Argument::new("first").required(true),
+                Argument::new("second").required(true),
+            ])
+            .handler(|app| {
+                let first = app.input.argument::<i32>("first").unwrap();
+                let second = app.input.argument::<i32>("second").unwrap();
 
-                    let alert = Alert::info(format!("Hello, {}!", name).as_str());
-
-                    app.output.writeln(alert);
-                })
-        }).run();
+                app.output.writeln(format!("Total: {}", first + second));
+            })])
+        .run();
 }
 ```
 
