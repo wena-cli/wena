@@ -140,7 +140,7 @@ let command = Command::new("command-name")
     .description("Command description");
 ```
 
-#### Command handle
+#### Command handler
 
 The command's `handle()` method receives a closure that contains the logic you want the command to execute.
 
@@ -168,6 +168,8 @@ let command = Command::new("command-name")
         Ok(0)
     });
 ```
+
+In addition, the given handler should return a result with an `i32` [exit status](https://en.wikipedia.org/wiki/Exit_status). Keep in mind, that the given exit status is used internally by the framework the exit the current process.
 
 #### Command input
 
