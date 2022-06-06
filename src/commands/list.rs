@@ -34,7 +34,7 @@ impl ListCommandFactory {
                     let name = subcommand.name.clone().bold().white();
                     let description = subcommand.description.clone();
 
-                    let mut line = format!("         {}", name);
+                    let mut line = format!("  {}", name);
 
                     subcommand.definition.iter().for_each(|argument| {
                         let name = argument.get_id();
@@ -53,7 +53,7 @@ impl ListCommandFactory {
                         format!(
                             "{}",
                             ".".repeat(
-                                terminal.width() - line.len() + 1
+                                terminal.width() - line.len() + 8
                                     - description.len()
                             )
                             .color(TrueColor {
