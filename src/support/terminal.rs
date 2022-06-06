@@ -10,9 +10,13 @@ impl Terminal {
     }
 
     pub fn default() -> Self {
-        let (width, _) = terminal_size().unwrap();
+        let sizes = terminal_size();
 
-        Self::new(width.0 as usize)
+        if let Some((width, _)) = sizes {
+            Self::new(width.0 as usize)
+        } else {
+            Self::new(80)
+        }
     }
 
     pub fn width(&self) -> usize {
