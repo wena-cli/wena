@@ -1,3 +1,5 @@
+use clap::ErrorKind;
+
 use crate::commands::Command;
 use crate::components::Alert;
 use crate::input::Input;
@@ -20,9 +22,17 @@ impl InvalidCommandFactory {
                     }
 
                     | Err(error) => {
-                        app.output.writeln(Alert::error(
-                            error.kind().to_string().as_str(),
-                        ));
+                        match error.kind() {
+                            ErrorKind::DisplayHelp => {
+                                panic!("The `--help` argument is not implemented.");
+                            }
+
+                            _ => {
+                                app.output.writeln(Alert::error(
+                                    error.kind().to_string().as_str(),
+                                ));
+                            }
+                        }
                     }
                 }
 
