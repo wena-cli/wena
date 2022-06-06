@@ -71,7 +71,9 @@ impl ListCommandFactory {
                     app.output.writeln(line);
                 }
 
-                app.output.new_line();
+                if (app.commands.len() as i32) > 0 {
+                    app.output.new_line();
+                }
 
                 Ok(0)
             })
