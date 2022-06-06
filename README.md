@@ -17,7 +17,7 @@ Wena was created by [Nuno Maduro](https://github.com/nunomaduro), and is a [Rust
 
 ## Get Started
 
-> **Requires [Rust 1.57.0](https://blog.rust-lang.org/2021/12/02/Rust-1.57.0.html)**
+> **Requires [Rust 1.61.0](https://blog.rust-lang.org/2022/05/19/Rust-1.61.0.html)**
 
 First, install a recent release of Rust via the [rustup](https://rustup.rs):
 
@@ -35,7 +35,7 @@ Once the project is created, add `wena` as dependency in your `Cargo.yml`:
 
 ```toml
 [dependencies]
-wena = "0.0.3"
+wena = "0.1.0"
 ```
 
 After, modify your `src/main.rs` file, and create your CLI application:
@@ -61,11 +61,168 @@ fn main() {
 }
 ```
 
-Finally, compile and run the with `cargo run`. You should see the following:
+Finally, compile and run the with `cargo run`.
 
 ```
 cargo run -q --
 ```
+
+## Application
+
+As you may have noticed, Wena applications may be created using the struct `Application` that gets exported at root level of the crate `wena`. And, the `new` static method allows you to create an instance of the struct `Application`:
+
+```rust
+use wena::Application;
+
+let app = Application::new("your-application-name");
+```
+
+The struct `Application` represents a command line application, and as such, it contains: a name, description, version, list of commands, an input implemention, and an output implemention.
+
+### Description
+
+Having a description is not required. You can optionally define a description using `description()` method:
+
+```rust
+use wena::Application
+
+let app = Application::new("application-name")
+    .description("Application description");
+```
+
+### Version
+
+By default, the application version is `1.0.0`. You can optionally define a version using `version()` method:
+
+```rust
+use wena::Application
+
+let app = Application::new("application-name")
+    .version("0.1.0");
+```
+
+### Commands
+
+You may run your application without any arguments to view all available commands in the application. Commands are defined using the `commands` method:
+
+```rust
+use wena::{Application, Command, Output};
+
+let app = Application::new("application-name")
+    .commands([
+        Command::new("command-name").handler(|app| {
+            // Command code...
+        })
+    ]);
+```
+
+#### Command description
+
+Having a description is not required. You can optionally define a description using `description()` method:
+
+```rust
+use wena::Command
+
+let command = Command::new("command-name")
+    .description("Command description");
+```
+
+#### Command handle
+
+The command's `handle()` method receives a closure that contains the logic you want the command to execute.
+
+```rust
+use wena::Command
+
+let command = Command::new("command-name")
+    .handler(|app| {
+        // Command code...
+    });
+```
+
+The closure's first argument is an `Application` instance. As such, you have access to the application's `Input` and `Output` at any time in your command's code:
+
+```rust
+use wena::Command
+
+let command = Command::new("command-name")
+    .handler(|app| {
+        let input = &app.input;
+        let output = &app.output;
+    });
+```
+
+#### Command input
+
+The command's input may be defined using the command's `definition` method:
+
+```rust
+use wena::{Argument, Command};
+
+let command = Command::new("command-name")
+    .definition([
+        Argument::new("argument-name").required(true),
+    ]);
+```
+
+When defined, input arguments may be accessed using the method `argument` in your command's code:
+
+```rust
+use wena::{Argument, Command, Input};
+
+let command = Command::new("command-name")
+    .definition([
+        Argument::new("argument-name").required(true),
+    ]).handler(|app| {
+        let value = app.input.argument::<String>("argument-name");
+    });
+```
+
+The trait `Input` is required when using methods of the struct `Input`.
+
+#### Command output
+
+When necesseray, you may write messages to the console using the command's output `write` or `writeln` methods:
+
+```rust
+use wena::{Command, Output};
+
+let command = Command::new("command-name")
+    .handler(|app| {
+        // Outputs the given message...
+        app.output.write("My message");
+
+        // Outputs the a new line...
+        app.output.new_line();
+
+        // Outputs the given message and a new line...
+        app.output.writeln("My message");
+    });
+```
+
+The trait `Output` is required when using methods of the struct `Output`.
+
+## Components
+
+Wena gives you access the beautifully designed output components that give you everything you need to build CLI applications.
+
+### Alert
+
+Alerts provide contextual feedback messages for typical user actions.
+
+```rust
+use wena::{Alert, Command, Output};
+
+let command = Command::new("command-name")
+    .handler(|app| {
+        app.output.writeln(Alert::info("This is a info — check it out!"));
+        app.output.writeln(Alert::success("This is a success — check it out!"));
+        app.output.writeln(Alert::danger("This is a danger — check it out!"));
+        app.output.writeln(Alert::warning("This is a warning — check it out!"));
+    );
+```
+
+---
 
 ## License
 
