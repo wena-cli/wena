@@ -16,24 +16,21 @@ impl InvalidCommandFactory {
             .description("Displays an invalid command")
             .handler(|app| {
                 match app.input.matches() {
-
                     | Ok(_) => {
                         // ..
                     }
 
-                    | Err(error) => {
-                        match error.kind() {
-                            ErrorKind::DisplayHelp => {
-                                panic!("The `--help` argument is not implemented.");
-                            }
-
-                            _ => {
-                                app.output.writeln(Alert::error(
-                                    error.kind().to_string().as_str(),
-                                ));
-                            }
+                    | Err(error) => match error.kind() {
+                        | ErrorKind::DisplayHelp => {
+                            panic!("The `--help` argument is not implemented.");
                         }
-                    }
+
+                        | _ => {
+                            app.output.writeln(Alert::error(
+                                error.kind().to_string().as_str(),
+                            ));
+                        }
+                    },
                 }
 
                 Ok(1)
