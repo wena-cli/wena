@@ -14,9 +14,11 @@ impl InvalidCommandFactory {
             .description("Displays an invalid command")
             .handler(|app| {
                 match app.input.matches() {
+
                     | Ok(_) => {
                         // ..
                     }
+
                     | Err(error) => {
                         app.output.writeln(Alert::error(
                             error.kind().to_string().as_str(),
@@ -24,7 +26,7 @@ impl InvalidCommandFactory {
                     }
                 }
 
-                Ok(0)
+                Ok(1)
             })
     }
 }
