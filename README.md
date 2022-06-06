@@ -71,7 +71,7 @@ cargo run -q --
 
 ## Application
 
-As you may have noticed, Wena applications may be created using the struct `Application` that gets exported at root level of the crate `wena`. And, the `new` static method allows you to create an instance of the struct `Application`:
+As you may have noticed, Wena applications may be created using the struct `Application` that gets exported at the root level of the crate `wena`. And, the `new` static method allows you to create an instance of the struct `Application`:
 
 ```rust
 use wena::Application;
@@ -79,11 +79,20 @@ use wena::Application;
 let app = Application::new("your-application-name");
 ```
 
-The struct `Application` represents a command line application, and as such, it contains: a name, description, version, list of commands, an input implemention, and an output implemention.
+The struct `Application` represents a command-line application, and as such, it contains a name, description, version, list of commands, an input implementation, and an output implementation.
+
+You may run the application at any time using the method `run()`:
+
+```rust
+use wena::Application;
+
+let app = Application::new("your-application-name")
+    .run();
+```
 
 ### Description
 
-Having a description is not required. You can optionally define a description using `description()` method:
+Having a description is not required. You can optionally define a description using the `description()` method:
 
 ```rust
 use wena::Application
@@ -94,7 +103,7 @@ let app = Application::new("application-name")
 
 ### Version
 
-By default, the application version is `1.0.0`. You can optionally define a version using `version()` method:
+By default, the application version is `1.0.0`. You can optionally define a version using the `version()` method:
 
 ```rust
 use wena::Application
@@ -122,7 +131,7 @@ let app = Application::new("application-name")
 
 #### Command description
 
-Having a description is not required. You can optionally define a description using `description()` method:
+Having a description is not required. You can optionally define a description using the `description()` method:
 
 ```rust
 use wena::Command
@@ -192,7 +201,7 @@ The trait `Input` is required when using methods of the struct `Input`.
 
 #### Command output
 
-When necesseray, you may write messages to the console using the command's output `write` or `writeln` methods:
+When necessary, you may write messages to the console using the command's output `write` or `writeln` methods:
 
 ```rust
 use wena::{Command, Output};
@@ -228,7 +237,7 @@ use wena::{Alert, Command, Output};
 let command = Command::new("command-name")
     .handler(|app| {
         app.output.writeln(Alert::error("This is a error — check it out!"));
-        app.output.writeln(Alert::success("This is a success — check it out!"));
+        app.output.writeln(Alert::info("This is a info — check it out!"));
         app.output.writeln(Alert::warn("This is a warning — check it out!"));
 
         Ok(0)
