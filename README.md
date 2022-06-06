@@ -129,17 +129,6 @@ let app = Application::new("application-name")
     ]);
 ```
 
-#### Command description
-
-Having a description is not required. You can optionally define a description using the `description()` method:
-
-```rust
-use wena::Command
-
-let command = Command::new("command-name")
-    .description("Command description");
-```
-
 #### Command handler
 
 The command's `handle()` method receives a closure that contains the logic you want the command to execute.
