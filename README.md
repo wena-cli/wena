@@ -1,7 +1,7 @@
 <p align="center">
     <img title="Wena" width="50%" src="https://raw.githubusercontent.com/wena-cli/wena/main/art/logo.png" />
     <br>
-    <img src="https://raw.githubusercontent.com/wena-cli/wena/main/art/example.png" alt="Wena code example" height="300">
+    <img width="80%" src="https://raw.githubusercontent.com/wena-cli/wena/main/art/example.png" alt="Wena code example">
 </p>
 
 <p align="center">
