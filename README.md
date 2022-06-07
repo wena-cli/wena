@@ -13,7 +13,7 @@
 
 Wena was created by [Nuno Maduro](https://github.com/nunomaduro), and is a [Rust Lang](https://www.rust-lang.org) micro-framework that provides an elegant starting point for your console application.
 
-> This project is a work-in-progress. Code and documentation are currently under development and are subject to change.
+> **This project is a work-in-progress**. Code and documentation are currently under development and are subject to change.
 
 ------
 
