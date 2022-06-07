@@ -230,6 +230,10 @@ Wena gives you access the beautifully designed output components that give you e
 
 ### Alert
 
+<p align="center">
+    <img alt="Wena alerts" width="80%" src="https://raw.githubusercontent.com/wena-cli/wena/main/art/alerts.png" />
+</p>
+
 Alerts provide contextual feedback messages for typical user actions.
 
 ```rust
@@ -239,7 +243,7 @@ let command = Command::new("command-name")
     .handler(|app| {
         app.output.writeln(Alert::error("This is a error — check it out!"));
         app.output.writeln(Alert::info("This is a info — check it out!"));
-        app.output.writeln(Alert::warn("This is a warning — check it out!"));
+        app.output.writeln(Alert::warning("This is a warning — check it out!"));
 
         Ok(0)
     );
