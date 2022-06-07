@@ -57,7 +57,11 @@ fn main() {
                 let first = app.input.argument::<i32>("first").unwrap();
                 let second = app.input.argument::<i32>("second").unwrap();
 
-                app.output.writeln(format!("Total: {}", first + second));
+                app.output.writeln(
+                    Alert::info(
+                        format!("Total: {}", first + second)
+                    )
+                );
 
                 Ok(0)
             })])
@@ -70,6 +74,10 @@ Finally, compile and run the with `cargo run`.
 ```
 cargo run -q --
 ```
+
+<p align="center">
+    <img alt="Wena get started" width="80%" src="https://raw.githubusercontent.com/wena-cli/wena/main/art/get-started.png" />
+</p>
 
 ## Application
 
