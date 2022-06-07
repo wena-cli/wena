@@ -224,6 +224,20 @@ let command = Command::new("command-name")
 
 The trait `Output` is required when using methods of the struct `Output`.
 
+## Colors and combinatorial style
+
+<p align="center">
+    <img alt="Wena colors and combinatorial style" width="50%" src="https://raw.githubusercontent.com/wena-cli/wena/main/art/styling.png" />
+</p>
+
+Wena lets you apply different styles to any `String` given to command's output methods. As such, when importing `colored::*;`, you may change the font color, background color, and combinatorial style such as bold, italics, dimmed, etc:
+
+```rust
+use colored::*;
+
+app.output.writeln("My message".bold().italic().green());
+```
+
 ## Components
 
 Wena gives you access the beautifully designed output components that give you everything you need to build CLI applications.
