@@ -42,7 +42,7 @@ wena = "0.1.0"
 
 After, modify your `src/main.rs` file, and create your CLI application:
 
-```rs
+```rust
 use wena::*;
 
 fn main() {
