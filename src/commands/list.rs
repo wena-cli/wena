@@ -4,7 +4,7 @@ use colored::*;
 use crate::commands::Command;
 use crate::input::Input;
 use crate::output::Output;
-use crate::support::terminal::Terminal;
+use crate::support::Terminal;
 
 pub struct ListCommandFactory {
     // ..

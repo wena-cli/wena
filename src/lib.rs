@@ -6,6 +6,7 @@ pub use application::Application;
 pub use components::Alert;
 pub use input::{InlineInput, Input};
 pub use output::{BufferOutput, Output};
+pub use support::Terminal;
 
 mod application;
 mod commands;

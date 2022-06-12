@@ -1,1 +1,3 @@
-pub mod terminal;
+mod terminal;
+
+pub use terminal::Terminal;

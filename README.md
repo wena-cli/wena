@@ -263,6 +263,23 @@ let command = Command::new("command-name")
     );
 ```
 
+## Utilities
+
+Wena offers you several utilities that you may use to customize the nitty-gritty of your CLI application.
+
+### Terminal
+
+The `Terminal` struct gives you access to multiple aspects of the user's terminal:
+
+```rust
+use wena::Terminal;
+
+let terminal = Terminal::default();
+
+// Computes the user's terminal width...
+let width = terminal.width();
+```
+
 ---
 
 ## License
