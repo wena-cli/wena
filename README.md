@@ -37,7 +37,7 @@ Once the project is created, add `wena` as dependency in your `Cargo.yml`:
 
 ```toml
 [dependencies]
-wena = "0.1.1"
+wena = "0.2.0"
 ```
 
 After, modify your `src/main.rs` file, and create your CLI application:
