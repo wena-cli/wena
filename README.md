@@ -69,7 +69,7 @@ fn main() {
 }
 ```
 
-Finally, compile and run the with `cargo run`.
+Finally, compile and run the application with `cargo run`.
 
 ```
 cargo run -q --
@@ -168,7 +168,7 @@ let command = Command::new("command-name")
     });
 ```
 
-In addition, the given handler should return a result with an `i32` [exit status](https://en.wikipedia.org/wiki/Exit_status). Keep in mind, that the given exit status is used internally by the framework the exit the current process.
+In addition, the given handler should return a result with an `i32` [exit status](https://en.wikipedia.org/wiki/Exit_status). Keep in mind, that the given exit status is used internally by the framework that exit the current process.
 
 #### Command input
 
